@@ -2,6 +2,8 @@
 #define CHATWINDOW_H
 
 #include <QMainWindow>
+#include <QListWidget>
+
 #include <future>
 
 #include "eventmessageprocessor.h"
@@ -15,7 +17,7 @@ class ChatWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ChatWindow(QWidget *parent = 0);
+    explicit ChatWindow(QWidget *parent = nullptr);
     ~ChatWindow();
 private slots:
     void userStatusChangedSlot  ();
