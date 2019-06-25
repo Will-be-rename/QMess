@@ -4,15 +4,34 @@
 #include <queue>
 #include <mutex>
 
-class UserStatus{};
-class Message{};
+#include <QDataStream>
 
+struct Message
+{
+    size_t          m_idMessage;
+    size_t          m_idSender;
+    size_t          m_idReceiver;
+    QString         m_textBody;
+    QString         m_dateTime;
+    friend QDataStream &operator<<(QDataStream &ds, const Message &a);
+    friend QDataStream &operator>>(QDataStream &ds, Message &a);
+};
+
+struct UserStatus // UserStatus ???
+{
+    size_t      m_userId;
+    std::string m_userName;
+    bool        m_isOnline;
+};
 
 enum PackageType
 {
     eUserStatus,
     eMessage,
 };
+
+
+
 
 class DataStorage
 {

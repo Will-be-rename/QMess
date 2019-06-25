@@ -11,8 +11,8 @@ ChatWindow::ChatWindow(QWidget *parent) :
     m_Worker()
 {
     m_ui->setupUi(this);
-    auto threadWorker = [this](EventMessageProcessor& eventProcessor){eventProcessor.processEvents();};
-    m_Worker = std::async(std::launch::async, threadWorker, std::ref(m_EventProcessor));
+    //auto threadWorker = [this](EventMessageProcessor& eventProcessor){eventProcessor.processEvents();};
+    //m_Worker = std::async(std::launch::async, threadWorker, std::ref(m_EventProcessor));
 
     connect(&m_EventProcessor, SIGNAL(newMessageRecieved()),
                      this, SLOT(newMessageRecievedSlot()));
@@ -24,7 +24,7 @@ ChatWindow::ChatWindow(QWidget *parent) :
 ChatWindow::~ChatWindow()
 {
     m_EventProcessor.finish();
-    m_Worker.get();
+    //m_Worker.get();
     delete m_ui;
 }
 

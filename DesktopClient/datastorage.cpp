@@ -46,3 +46,15 @@ Message DataStorage::getMessage()
     m_MsgMtx.unlock();
     return returnValue;
 }
+
+QDataStream &operator<<(QDataStream &out, const Message &a)
+{
+    out << a.m_idMessage << a.m_idSender << a.m_idReceiver << a.m_textBody << a.m_dateTime;
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, Message &a)
+{
+    in >> a.m_idMessage >> a.m_idSender >> a.m_idReceiver >> a.m_textBody >> a.m_dateTime;
+    return in;
+}

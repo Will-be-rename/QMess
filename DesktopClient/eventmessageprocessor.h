@@ -2,7 +2,7 @@
 #define EVENTMESSAGEPROCESSOR_H
 
 #include <QObject>
-
+#include <QTcpSocket>
 #include "datastorage.h"
 
 class EventMessageProcessor : public QObject
@@ -21,11 +21,11 @@ public slots:
     void login              (const UserStatus& newStatus);
     void logout             (const UserStatus& newStatus);
 
-private:
+private slots:
     void notify();
 private:
-    PackageType m_CurrentMessage;
-    volatile bool m_isRunning;
+    volatile bool   m_isRunning;
+    QTcpSocket      m_socket;
 };
 
 #endif // EVENTMESSAGEPROCESSOR_H
