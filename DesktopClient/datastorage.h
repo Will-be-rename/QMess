@@ -20,8 +20,10 @@ struct Message
 struct UserStatus // UserStatus ???
 {
     size_t      m_userId;
-    std::string m_userName;
+    QString     m_userName;
     bool        m_isOnline;
+    friend QDataStream &operator<<(QDataStream &ds, const UserStatus &a);
+    friend QDataStream &operator>>(QDataStream &ds, UserStatus &a);
 };
 
 enum PackageType
@@ -41,6 +43,7 @@ public:
     void            addMessage   (const Message newMessage);
     UserStatus      getUserStatus();
     Message         getMessage   ();
+    UserStatus&     getCurrentUser();
 private:
     DataStorage();
     DataStorage(const DataStorage&) = delete;
@@ -53,6 +56,7 @@ private:
     std::mutex                  m_MsgMtx;
     std::queue<UserStatus>      m_Statuses;
     std::queue<Message>         m_Messages;
+    UserStatus                  m_CurrentUser;
 };
 
 #endif // DATASTORAGE_H

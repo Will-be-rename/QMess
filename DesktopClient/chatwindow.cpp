@@ -2,29 +2,25 @@
 #include "ui_chatwindow.h"
 
 #include <QDebug>
-#include <functional>
-
+#include <QDate>
+#include <QRandomGenerator>
 ChatWindow::ChatWindow(QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::ChatWindow),
-    m_EventProcessor(),
-    m_Worker()
+    m_EventProcessor()
 {
     m_ui->setupUi(this);
-    //auto threadWorker = [this](EventMessageProcessor& eventProcessor){eventProcessor.processEvents();};
-    //m_Worker = std::async(std::launch::async, threadWorker, std::ref(m_EventProcessor));
-
     connect(&m_EventProcessor, SIGNAL(newMessageRecieved()),
                      this, SLOT(newMessageRecievedSlot()));
     connect(&m_EventProcessor, SIGNAL(userStatusChanged()),
                      this, SLOT(userStatusChangedSlot()));
 
+    m_EventProcessor.processEvents();
 }
 
 ChatWindow::~ChatWindow()
 {
     m_EventProcessor.finish();
-    //m_Worker.get();
     delete m_ui;
 }
 
@@ -37,12 +33,21 @@ void ChatWindow::userStatusChangedSlot()
 void ChatWindow::newMessageRecievedSlot()
 {
     qDebug() << "newMessageRecievedSlot";
-    m_ui->mainTextBody->setText("newMessageRecievedSlot");
+    Message msg = DataStorage::getInstance().getMessage();
+    m_ui->mainTextBody->setText(msg.m_dateTime + "\t" + msg.m_textBody + "\n");
 }
 
 void ChatWindow::on_sendButton_clicked()
 {
     qDebug() << "on_sendButton_clicked";
+    Message msg;
+    msg.m_textBody = m_ui->inputTextbox->text();
+    msg.m_dateTime = QDate::currentDate().toString();
+    msg.m_idMessage = QRandomGenerator::global()->generate();
+    msg.m_idReceiver = 1;
+    msg.m_idSender = 1;
+    m_EventProcessor.sendMessage(msg);
+    m_ui->inputTextbox->setText("");
 }
 
 void ChatWindow::on_usersListWigdet_itemClicked(QListWidgetItem *item)

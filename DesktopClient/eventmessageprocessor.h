@@ -18,8 +18,7 @@ signals:
     void newMessageRecieved ();
 public slots:
     void sendMessage        (const Message& newMessage);
-    void login              (const UserStatus& newStatus);
-    void logout             (const UserStatus& newStatus);
+    void sendUserStatus     (const UserStatus& newStatus);
 
 private slots:
     void notify();

@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include <QListWidget>
 
-#include <future>
-
 #include "eventmessageprocessor.h"
 
 namespace Ui {
@@ -28,7 +26,6 @@ private slots:
 private:
     Ui::ChatWindow*             m_ui;
     EventMessageProcessor       m_EventProcessor;
-    std::future<void>           m_Worker;
 };
 
 #endif // CHATWINDOW_H

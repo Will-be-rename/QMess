@@ -25,7 +25,7 @@ void ServerRunner::onNewConnection()
     QDataStream ds(&data, QIODevice::ReadWrite);
     qDebug() << "QByteArray size " << data.size();
     ds.setVersion(QDataStream::Qt_5_11);
-    ds << msg;
+    ds << (int)1<<  msg;
     qDebug() << "Data QByteArray|" << data.data() << "|size " << data.size();
     clientSocket->write(data);
 }
