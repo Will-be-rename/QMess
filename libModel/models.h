@@ -1,22 +1,27 @@
 #ifndef MODELS_H
 #define MODELS_H
 
-#include <string>
+#include <QString>
+#include <QDataStream>
 
 struct Message
 {
     size_t          m_idMessage;
     size_t          m_idSender;
     size_t          m_idReceiver;
-    std::string     m_textBody;
-    std::string     m_dateTime;
+    QString         m_textBody;
+    QString         m_dateTime;
+    friend QDataStream &operator<<(QDataStream &ds, const Message &a);
+    friend QDataStream &operator>>(QDataStream &ds, Message &a);
 };
 
-struct UserInfo // UserStatus ???
+struct UserStatus // UserStatus ???
 {
     size_t      m_userId;
-    std::string m_userName;
+    QString     m_userName;
     bool        m_isOnline;
+    friend QDataStream &operator<<(QDataStream &ds, const UserStatus &a);
+    friend QDataStream &operator>>(QDataStream &ds, UserStatus &a);
 };
 
 enum PackageType
@@ -24,4 +29,5 @@ enum PackageType
     eUserStatus,
     eMessage,
 };
+
 #endif //  MODELS_H
