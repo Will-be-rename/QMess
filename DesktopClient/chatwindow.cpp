@@ -10,11 +10,15 @@ ChatWindow::ChatWindow(QWidget *parent) :
     m_EventProcessor()
 {
     m_ui->setupUi(this);
+
     connect(&m_EventProcessor, SIGNAL(newMessageRecieved()),
                      this, SLOT(newMessageRecievedSlot()));
     connect(&m_EventProcessor, SIGNAL(userStatusChanged()),
                      this, SLOT(userStatusChangedSlot()));
 
+    QIcon ButtonIcon("://send.png");
+    m_ui->sendButton->setIcon(ButtonIcon);
+    m_ui->sendButton->setIconSize(QSize(95, 95));
     m_EventProcessor.processEvents();
 }
 

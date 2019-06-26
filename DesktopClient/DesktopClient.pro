@@ -36,3 +36,6 @@ HEADERS += \
 
 FORMS += \
         chatwindow.ui
+
+RESOURCES += \
+    images/imagesresource.qrc
