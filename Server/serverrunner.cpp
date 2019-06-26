@@ -1,5 +1,6 @@
 #include "serverrunner.h"
 #include "models.h"
+#include "tcpdefines.h"
 
 #include <QDebug>
 #include <QTcpSocket>
@@ -7,7 +8,7 @@
 
 ServerRunner::ServerRunner()
 {
-    m_server.listen(QHostAddress::Any, 18653);
+    m_server.listen(QHostAddress::Any, tcpdefines::port);
     connect(&m_server, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
         qDebug() << "ServerRunner ctor \n";
 }
@@ -21,11 +22,15 @@ void ServerRunner::onNewConnection()
     msg.m_idReceiver = 1;
     msg.m_idSender = 2;
     msg.m_textBody = "text";
+    UserStatus usr;
+    usr.m_userId = 1;
+    usr.m_isOnline = true;
+    usr.m_userName = "TextName";
     QByteArray data;
     QDataStream ds(&data, QIODevice::ReadWrite);
     qDebug() << "QByteArray size " << data.size();
     ds.setVersion(QDataStream::Qt_5_11);
-    ds << (int)1<<  msg;
+    ds << (int)0<<  usr;
     qDebug() << "Data QByteArray|" << data.data() << "|size " << data.size();
     clientSocket->write(data);
 }

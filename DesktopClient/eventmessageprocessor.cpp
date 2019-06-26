@@ -1,4 +1,5 @@
 #include "eventmessageprocessor.h"
+#include "tcpdefines.h"
 
 #include <QHostAddress>
 #include <QDebug>
@@ -14,7 +15,7 @@ EventMessageProcessor::EventMessageProcessor(QObject *parent) :
 void EventMessageProcessor::processEvents()
 {
     // this method will receive new TCP packages
-    m_socket.connectToHost(QHostAddress("127.0.0.1"), 18653);
+    m_socket.connectToHost(QHostAddress(tcpdefines::ip), tcpdefines::port);
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(notify()));
 }
 
@@ -29,8 +30,7 @@ void EventMessageProcessor::sendMessage(const Message& newMessage)
     QByteArray data;
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
-    ds << 1;
-    ds << newMessage;
+    ds << static_cast<int>(eMessage) << newMessage;
     m_socket.write(data);
 }
 
@@ -48,17 +48,18 @@ void EventMessageProcessor::sendUserStatus(const UserStatus& newStatus)
 void EventMessageProcessor::notify()
 {
     int m_CurrentMessage = eMessage;
-    Message incommingMess;
     QByteArray data = m_socket.readAll();
+
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
-    ds >> m_CurrentMessage >> incommingMess;
-    qDebug() << "incommingMess "  << incommingMess.m_dateTime << "  " << incommingMess.m_textBody;
+    ds >> m_CurrentMessage;
 
     switch(m_CurrentMessage)
     {
         case eMessage:
         {
+            Message incommingMess;
+            ds >> incommingMess;
             DataStorage::getInstance().addMessage(incommingMess);
             emit newMessageRecieved();
         }
@@ -67,6 +68,7 @@ void EventMessageProcessor::notify()
         case eUserStatus:
         {
             UserStatus userStat;
+            ds >> userStat;
             DataStorage::getInstance().addUserStatus(userStat);
             emit userStatusChanged();
         }

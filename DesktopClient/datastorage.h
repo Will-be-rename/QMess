@@ -4,6 +4,7 @@
 #include <queue>
 #include <mutex>
 
+#include<QVector>
 #include <QDataStream>
 
 #include "models.h"
@@ -17,6 +18,7 @@ public:
     UserStatus      getUserStatus();
     Message         getMessage   ();
     UserStatus&     getCurrentUser();
+    QVector<UserStatus> onlineUsers;
 private:
     DataStorage();
     DataStorage(const DataStorage&) = delete;

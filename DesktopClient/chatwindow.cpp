@@ -26,8 +26,39 @@ ChatWindow::~ChatWindow()
 
 void ChatWindow::userStatusChangedSlot()
 {
-    qDebug() << "userStatusChangedSlot";
-    m_ui->mainTextBody->setText("userStatusChangedSlot");
+    UserStatus status = DataStorage::getInstance().getUserStatus();
+    qDebug() << "userStatusChangedSlot id " << status.m_userId << " isOnline " << status.m_isOnline;
+    int positionToUpdate = -1;
+    for (int i = 0; i < DataStorage::getInstance().onlineUsers.size();i++)
+    {
+        if(DataStorage::getInstance().onlineUsers[i].m_userId == status.m_userId)
+        {
+            positionToUpdate = i;
+        }
+    }
+
+    QListWidgetItem *item ;
+    if(-1 == positionToUpdate)
+    {
+        DataStorage::getInstance().onlineUsers.push_back(status);
+        item= new QListWidgetItem(m_ui->usersListWigdet);
+    }
+    else
+    {
+        item = m_ui->usersListWigdet->item(positionToUpdate);
+    }
+
+    item->setText(status.m_userName);
+
+    if(status.m_isOnline)
+    {
+        item->setIcon(QIcon(":/online.png"));
+    }
+    else
+    {
+        item->setIcon(QIcon(":/offline.png"));
+    }
+    m_ui->usersListWigdet->addItem(item);
 }
 
 void ChatWindow::newMessageRecievedSlot()

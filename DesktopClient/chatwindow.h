@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <QListWidget>
-
+#include <QItemDelegate>
+#include <QPainter>
 #include "eventmessageprocessor.h"
 
 namespace Ui {

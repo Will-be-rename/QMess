@@ -25,7 +25,8 @@ SOURCES += \
     models.cpp
 
 HEADERS += \
-        models.h
+        models.h \
+        tcpdefines.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
