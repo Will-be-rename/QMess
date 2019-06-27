@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>send.png</file>
         <file>sendPressed.png</file>
+        <file>online.png</file>
+        <file>offline.png</file>
     </qresource>
 </RCC>

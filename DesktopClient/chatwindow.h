@@ -3,8 +3,7 @@
 
 #include <QMainWindow>
 #include <QListWidget>
-#include <QItemDelegate>
-#include <QPainter>
+
 #include "eventmessageprocessor.h"
 
 namespace Ui {
@@ -23,8 +22,12 @@ private slots:
     void newMessageRecievedSlot ();
     void on_sendButton_clicked();
     void on_usersListWigdet_itemClicked(QListWidgetItem *item);
+    void on_sendButton_pressed();
+    void on_sendButton_released();
+    void selectedUserHistoryUpdated(size_t userId);
 
 private:
+    void loadHistory(const QVector<QString>& newHistory);
     Ui::ChatWindow*             m_ui;
     EventMessageProcessor       m_EventProcessor;
 };

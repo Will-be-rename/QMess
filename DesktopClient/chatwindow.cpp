@@ -24,7 +24,6 @@ ChatWindow::ChatWindow(QWidget *parent) :
 
 ChatWindow::~ChatWindow()
 {
-    m_EventProcessor.finish();
     delete m_ui;
 }
 
@@ -56,11 +55,11 @@ void ChatWindow::userStatusChangedSlot()
 
     if(status.m_isOnline)
     {
-        item->setIcon(QIcon(":/online.png"));
+        item->setIcon(QIcon("://online.png"));
     }
     else
     {
-        item->setIcon(QIcon(":/offline.png"));
+        item->setIcon(QIcon("://offline.png"));
     }
     m_ui->usersListWigdet->addItem(item);
 }
@@ -87,5 +86,38 @@ void ChatWindow::on_sendButton_clicked()
 
 void ChatWindow::on_usersListWigdet_itemClicked(QListWidgetItem *item)
 {
+    static_cast<void>(item);
+    m_ui->mainTextBody->setText("");
+    loadHistory(m_EventProcessor.m_cachedHistory.getChatHistory(m_ui->usersListWigdet->currentRow()));
     qDebug() << "on_usersListWigdet_itemClicked";
 }
+
+void ChatWindow::on_sendButton_pressed()
+{
+    QIcon ButtonIcon("://sendPressed.png");
+    m_ui->sendButton->setIcon(ButtonIcon);
+}
+
+void ChatWindow::on_sendButton_released()
+{
+    QIcon ButtonIcon("://send.png");
+    m_ui->sendButton->setIcon(ButtonIcon);
+}
+
+void ChatWindow::selectedUserHistoryUpdated(size_t userId)
+{
+    if(userId == DataStorage::getInstance().getCurrentUser().m_userId)
+    {
+        loadHistory(m_EventProcessor.m_cachedHistory.getChatHistory(userId));
+    }
+}
+
+void ChatWindow::loadHistory(const QVector<QString>& newHistory)
+{
+    for(int i = 0 ; i < newHistory.size(); i++)
+    {
+        m_ui->mainTextBody->setText(m_ui->mainTextBody->toPlainText() + "\n" + newHistory[i]);
+    }
+}
+
+

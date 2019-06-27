@@ -7,7 +7,6 @@
 
 EventMessageProcessor::EventMessageProcessor(QObject *parent) :
     QObject(parent),
-    m_isRunning(true),
     m_socket()
 {
 }
@@ -17,11 +16,6 @@ void EventMessageProcessor::processEvents()
     // this method will receive new TCP packages
     m_socket.connectToHost(QHostAddress(tcpdefines::ip), tcpdefines::port);
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(notify()));
-}
-
-void EventMessageProcessor::finish()
-{
-    m_isRunning = false;
 }
 
 // this method will send new message to server
@@ -74,6 +68,17 @@ void EventMessageProcessor::notify()
         }
         break;
 
+        case  eMessageHistoryResponse:
+        {
+            size_t userId;
+            ds >> userId;
+            QVector<QString> historyData;
+            ds >> historyData;
+            m_cachedHistory.fillChatHistoty(userId, historyData);
+            emit chatHistoryUpdated(userId);
+        }
+        break;
+        case  eMessageHistoryRequest:
         default:
         break;
     };
