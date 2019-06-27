@@ -46,40 +46,43 @@ void EventMessageProcessor::notify()
 
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
-    ds >> m_CurrentMessage;
-
-    switch(m_CurrentMessage)
+    while(!ds.atEnd())
     {
-        case eMessage:
-        {
-            Message incommingMess;
-            ds >> incommingMess;
-            DataStorage::getInstance().addMessage(incommingMess);
-            emit newMessageRecieved();
-        }
-        break;
+        ds >> m_CurrentMessage;
 
-        case eUserStatus:
+        switch(m_CurrentMessage)
         {
-            UserStatus userStat;
-            ds >> userStat;
-            DataStorage::getInstance().addUserStatus(userStat);
-            emit userStatusChanged();
-        }
-        break;
+            case eMessage:
+            {
+                Message incommingMess;
+                ds >> incommingMess;
+                DataStorage::getInstance().addMessage(incommingMess);
+                emit newMessageRecieved();
+            }
+            break;
 
-        case  eMessageHistoryResponse:
-        {
-            size_t userId;
-            ds >> userId;
-            QVector<QString> historyData;
-            ds >> historyData;
-            m_cachedHistory.fillChatHistoty(userId, historyData);
-            emit chatHistoryUpdated(userId);
-        }
-        break;
-        case  eMessageHistoryRequest:
-        default:
-        break;
-    };
+            case eUserStatus:
+            {
+                UserStatus userStat;
+                ds >> userStat;
+                DataStorage::getInstance().addUserStatus(userStat);
+                emit userStatusChanged();
+            }
+            break;
+
+            case  eMessageHistoryResponse:
+            {
+                size_t userId;
+                ds >> userId;
+                QVector<QString> historyData;
+                ds >> historyData;
+                m_cachedHistory.fillChatHistoty(userId, historyData);
+                emit chatHistoryUpdated(userId);
+            }
+            break;
+            case  eMessageHistoryRequest:
+            default:
+            break;
+        };
+    }
 }
