@@ -23,12 +23,14 @@ DEFINES -= QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+        cachedmessagehistory.cpp \
         main.cpp \
         chatwindow.cpp \
         eventmessageprocessor.cpp \
         datastorage.cpp
 
 HEADERS += \
+        cachedmessagehistory.h \
         chatwindow.h \
         eventmessageprocessor.h \
         datastorage.h
