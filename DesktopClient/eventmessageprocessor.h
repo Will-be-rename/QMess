@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QTcpSocket>
+
+#include "tcpdataprovider.h"
 #include "datastorage.h"
 #include "cachedmessagehistory.h"
 class EventMessageProcessor : public QObject
@@ -25,6 +27,7 @@ private slots:
     void notify();
 private:
     QTcpSocket              m_socket;
+    TcpDataProvider         m_dataProvider;
 
 };
 

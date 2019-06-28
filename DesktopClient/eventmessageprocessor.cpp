@@ -7,7 +7,8 @@
 
 EventMessageProcessor::EventMessageProcessor(QObject *parent) :
     QObject(parent),
-    m_socket()
+    m_socket(),
+    m_dataProvider()
 {
 }
 
@@ -21,21 +22,13 @@ void EventMessageProcessor::processEvents()
 // this method will send new message to server
 void EventMessageProcessor::sendMessage(const Message& newMessage)
 {
-    QByteArray data;
-    QDataStream ds(&data, QIODevice::ReadWrite);
-    ds.setVersion(QDataStream::Qt_5_11);
-    ds << static_cast<int>(eMessage) << newMessage;
-    m_socket.write(data);
+    m_dataProvider.sendMessage(m_socket, newMessage);
 }
 
 // this method will send new status to server
 void EventMessageProcessor::sendUserStatus(const UserStatus& newStatus)
 {
-    QByteArray data;
-    QDataStream ds(&data, QIODevice::ReadWrite);
-    ds.setVersion(QDataStream::Qt_5_11);
-    ds << static_cast<int>(eUserStatus) << newStatus;
-    m_socket.write(data);
+    m_dataProvider.sendUserStatus(m_socket, newStatus);
 }
 
 // notify subs about new incomming TCP packages
