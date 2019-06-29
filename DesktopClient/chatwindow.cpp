@@ -10,11 +10,11 @@ ChatWindow::ChatWindow(QWidget *parent) :
     m_EventProcessor()
 {
     m_ui->setupUi(this);
-
-    connect(&m_EventProcessor, SIGNAL(newMessageRecieved()),
-                     this, SLOT(newMessageRecievedSlot()));
-    connect(&m_EventProcessor, SIGNAL(userStatusChanged()),
-                     this, SLOT(userStatusChangedSlot()));
+    TcpDataProvider& dataProvider = m_EventProcessor.dataProvider();
+    connect(&dataProvider, SIGNAL(newMessageDetected(Message)),
+                     this, SLOT(newMessageRecievedSlot(Message)));
+    connect(&dataProvider, SIGNAL(newUserStatusDetected(UserStatus)),
+                     this, SLOT(userStatusChangedSlot(UserStatus)));
 
     QIcon ButtonIcon("://send.png");
     m_ui->sendButton->setIcon(ButtonIcon);
@@ -27,9 +27,8 @@ ChatWindow::~ChatWindow()
     delete m_ui;
 }
 
-void ChatWindow::userStatusChangedSlot()
+void ChatWindow::userStatusChangedSlot(UserStatus status)
 {
-    UserStatus status = DataStorage::getInstance().getUserStatus();
     qDebug() << "userStatusChangedSlot id " << status.m_userId << " isOnline " << status.m_isOnline;
     int positionToUpdate = -1;
     for (int i = 0; i < DataStorage::getInstance().onlineUsers.size();i++)
@@ -64,10 +63,9 @@ void ChatWindow::userStatusChangedSlot()
     m_ui->usersListWigdet->addItem(item);
 }
 
-void ChatWindow::newMessageRecievedSlot()
+void ChatWindow::newMessageRecievedSlot(Message msg)
 {
     qDebug() << "newMessageRecievedSlot";
-    Message msg = DataStorage::getInstance().getMessage();
     m_ui->mainTextBody->setText(msg.m_dateTime + "\t" + msg.m_textBody + "\n");
 }
 
@@ -88,7 +86,7 @@ void ChatWindow::on_usersListWigdet_itemClicked(QListWidgetItem *item)
 {
     static_cast<void>(item);
     m_ui->mainTextBody->setText("");
-    loadHistory(m_EventProcessor.m_cachedHistory.getChatHistory(m_ui->usersListWigdet->currentRow()));
+    loadHistory(m_EventProcessor.m_cachedHistory.getChatHistory(static_cast<size_t>(m_ui->usersListWigdet->currentRow())));
     qDebug() << "on_usersListWigdet_itemClicked";
 }
 

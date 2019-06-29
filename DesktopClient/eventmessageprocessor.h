@@ -14,11 +14,8 @@ public:
     explicit EventMessageProcessor(QObject *parent = nullptr);
     void processEvents();// main method
     CachedMessageHistory    m_cachedHistory;
-signals:
+    TcpDataProvider& dataProvider();
 
-    void userStatusChanged  ();
-    void newMessageRecieved ();
-    void chatHistoryUpdated (size_t);
 public slots:
     void sendMessage        (const Message& newMessage);
     void sendUserStatus     (const UserStatus& newStatus);

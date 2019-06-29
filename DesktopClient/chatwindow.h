@@ -18,8 +18,8 @@ public:
     explicit ChatWindow(QWidget *parent = nullptr);
     ~ChatWindow();
 private slots:
-    void userStatusChangedSlot  ();
-    void newMessageRecievedSlot ();
+    void userStatusChangedSlot  (UserStatus status);
+    void newMessageRecievedSlot (Message message);
     void on_sendButton_clicked();
     void on_usersListWigdet_itemClicked(QListWidgetItem *item);
     void on_sendButton_pressed();

@@ -2,21 +2,20 @@
 #define TCPDATAPROVIDER_H
 
 #include <QTcpSocket>
-
+#include <QObject>
 #include "models.h"
 
-class TcpDataProvider : QObject
+class TcpDataProvider : public QObject
 {
     Q_OBJECT
 public:
-    TcpDataProvider();
     void sendMessage(QTcpSocket& socket, const Message& message);
     void sendUserStatus(QTcpSocket& socket, const UserStatus& message);
     void sendLoginPackage(QTcpSocket& socket, const UserStatus& message);
     void getData(QTcpSocket& socket);
 signals :
     void newMessageDetected(const Message& message);
-    void newUserStatusDetected(const Message& message);
+    void newUserStatusDetected(const UserStatus& message);
 };
 
 #endif // TCPDATAPROVIDER_H

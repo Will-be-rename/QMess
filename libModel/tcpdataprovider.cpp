@@ -1,10 +1,5 @@
 #include "tcpdataprovider.h"
 
-TcpDataProvider::TcpDataProvider()
-{
-
-}
-
 void TcpDataProvider::sendMessage(QTcpSocket &socket, const Message &message)
 {
     QByteArray data;
@@ -34,5 +29,47 @@ void TcpDataProvider::sendLoginPackage(QTcpSocket &socket, const UserStatus &log
 
 void TcpDataProvider::getData(QTcpSocket &socket)
 {
+    int m_CurrentMessage = eMessage;
+    QByteArray data = socket.readAll();
 
+    qDebug() << "TcpDataProvider::getData size " << data.size();
+    QDataStream ds(&data, QIODevice::ReadWrite);
+    ds.setVersion(QDataStream::Qt_5_11);
+    while(!ds.atEnd())
+    {
+        ds >> m_CurrentMessage;
+
+        switch(m_CurrentMessage)
+        {
+            case eMessage:
+            {
+                Message incommingMess;
+                ds >> incommingMess;
+                emit newMessageDetected(incommingMess);
+            }
+            break;
+
+            case eUserStatus:
+            {
+                UserStatus userStat;
+                ds >> userStat;
+                emit newUserStatusDetected(userStat);
+            }
+            break;
+
+            /*case  eMessageHistoryResponse:
+            {
+                size_t userId;
+                ds >> userId;
+                QVector<QString> historyData;
+                ds >> historyData;
+                m_cachedHistory.fillChatHistoty(userId, historyData);
+                emit chatHistoryUpdated(userId);
+            }*/
+            break;
+            case  eMessageHistoryRequest:
+            default:
+            break;
+        };
+    }
 }
