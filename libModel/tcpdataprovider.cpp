@@ -66,6 +66,12 @@ void TcpDataProvider::getData(QTcpSocket &socket)
                 m_cachedHistory.fillChatHistoty(userId, historyData);
                 emit chatHistoryUpdated(userId);
             }*/
+            case eCurrentUserResponse:
+            {
+                UserStatus userStat;
+                ds >> userStat;
+                emit currentUserDetected(userStat);
+            }
             break;
             case  eMessageHistoryRequest:
             default:

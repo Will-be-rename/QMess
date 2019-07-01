@@ -16,6 +16,7 @@ public:
 signals :
     void newMessageDetected(const Message& message);
     void newUserStatusDetected(const UserStatus& message);
+    void currentUserDetected(const UserStatus& userStatus);
 };
 
 #endif // TCPDATAPROVIDER_H

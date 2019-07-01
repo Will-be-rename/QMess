@@ -36,6 +36,7 @@ enum PackageType
     eMessage,
     eMessageHistoryRequest,
     eMessageHistoryResponse,
+    eCurrentUserResponse,
 };
 
 #endif //  MODELS_H

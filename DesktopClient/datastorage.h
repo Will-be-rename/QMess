@@ -9,8 +9,9 @@
 
 #include "models.h"
 
-class DataStorage
+class DataStorage : public QObject
 {
+    Q_OBJECT
 public:
     static DataStorage&    getInstance  ();
     void            addUserStatus(const UserStatus newStatus);
@@ -19,6 +20,8 @@ public:
     Message         getMessage   ();
     UserStatus&     getCurrentUser();
     QVector<UserStatus> onlineUsers;
+public slots:
+    void            setCurrentUser(const UserStatus& currentUser);
 private:
     DataStorage();
     DataStorage(const DataStorage&) = delete;

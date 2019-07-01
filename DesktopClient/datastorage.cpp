@@ -1,5 +1,7 @@
 #include "datastorage.h"
 
+#include <QDebug>
+
 DataStorage::DataStorage() :
     m_UserMtx(),
     m_MsgMtx(),
@@ -50,4 +52,10 @@ Message DataStorage::getMessage()
 UserStatus &DataStorage::getCurrentUser()
 {
     return m_CurrentUser;
+}
+
+void DataStorage::setCurrentUser(const UserStatus &currentUser)
+{
+    qDebug() << "DataStorage::setCurrentUser id = " << currentUser.m_userId;
+    m_CurrentUser = currentUser;
 }

@@ -10,6 +10,9 @@ EventMessageProcessor::EventMessageProcessor(QObject *parent) :
     m_socket(),
     m_dataProvider()
 {
+    DataStorage* pointer = &DataStorage::getInstance();
+    connect(&m_dataProvider, SIGNAL(currentUserDetected(UserStatus)),
+            pointer, SLOT(setCurrentUser(UserStatus)) );
 }
 
 void EventMessageProcessor::processEvents()
