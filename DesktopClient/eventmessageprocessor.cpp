@@ -7,7 +7,7 @@
 
 EventMessageProcessor::EventMessageProcessor(QObject *parent) :
     QObject(parent),
-    m_socket(),
+    m_socket(this),
     m_dataProvider()
 {
     DataStorage* pointer = &DataStorage::getInstance();

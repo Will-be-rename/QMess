@@ -16,10 +16,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Handlers/eventhandler.cpp \
+        Handlers/eventhandler.cpp \
         main.cpp \
-    QRunable/runnabledirector.cpp \
+        QRunable/runnabledirector.cpp \
         serverrunner.cpp \
+        sessionclient.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -29,7 +30,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
         Handlers/eventhandler.h \
         QRunable/runnabledirector.h \
-        serverrunner.h
+        serverrunner.h \
+        sessionclient.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-libModel/release/ -llibModel
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-libModel/debug/ -llibModel

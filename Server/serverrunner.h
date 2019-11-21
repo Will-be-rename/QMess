@@ -8,8 +8,9 @@ class ServerRunner : public QTcpServer
     Q_OBJECT
 public:
     ServerRunner();
+    void StartServer();
 public slots:
-    void onNewConnection();
+    void incomingConnection(qintptr handle) override;
 private:
 };
 
