@@ -2,10 +2,8 @@
 #define SERVERRUNNER_H
 
 #include <QTcpServer>
-#include <QTcpSocket>
-#include <QByteArray>
 
-class ServerRunner : public QObject
+class ServerRunner : public QTcpServer
 {
     Q_OBJECT
 public:
@@ -13,7 +11,6 @@ public:
 public slots:
     void onNewConnection();
 private:
-    QTcpServer m_server;
 };
 
 #endif // SERVERRUNNER_H
