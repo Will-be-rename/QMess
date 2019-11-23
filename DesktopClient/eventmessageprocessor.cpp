@@ -18,9 +18,8 @@ EventMessageProcessor::EventMessageProcessor(QObject *parent) :
 void EventMessageProcessor::processEvents()
 {
     // this method will receive new TCP packages
-    m_socket.connectToHost(QHostAddress(tcpdefines::ip), tcpdefines::port);
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(notify()));
-    //connect(&m_dataProvider, SIGNAL())
+    m_socket.connectToHost(QHostAddress(tcpdefines::ip), tcpdefines::port);
 }
 
 // this method will send new message to server

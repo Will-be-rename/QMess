@@ -4,8 +4,11 @@
 #include <QThreadPool>
 #include <QString>
 #include <QVector>
+#include <QMutex>
 
 #include "models.h"
+#include "Data/datasrorage.h"
+#include "QRunable/connectionhandler.h"
 SessionClient::SessionClient(QObject *parent) : QObject(parent)
 {
     qDebug() << "SessionClient ctor";
@@ -16,44 +19,31 @@ void SessionClient::SetSocket(qintptr handle)
 {
     m_socket = new QTcpSocket(this);
     m_socket->setSocketDescriptor(handle);
-    connect(m_socket,SIGNAL(connected()),   this, SLOT(connected()),    Qt::ConnectionType::AutoConnection);
     connect(m_socket,SIGNAL(disconnected()),this, SLOT(disconnected()), Qt::ConnectionType::AutoConnection);
     connect(m_socket,SIGNAL(readyRead()),   this, SLOT(readyRead()),    Qt::ConnectionType::AutoConnection);
-    qDebug() << "Client connected";
+
+
+    qDebug() << "Client connected" << "Thread id" << QThread::currentThreadId();
+
+    ConnectionHandler* director = new ConnectionHandler();
+    director->setAutoDelete(true);
+    QThreadPool::globalInstance()->start(director);
+    connect(director,SIGNAL(finish(QByteArray)),   this, SLOT(notifyEveryone(QByteArray)),    Qt::ConnectionType::QueuedConnection);
+
+    DataStorage::getInstance()->getSessionClients().push_back(this);
 }
 
-void SessionClient::connected()
+QTcpSocket *SessionClient::GetSocket()
 {
-    clients.push_back(this);
-    UserStatus newUser {
-        static_cast<size_t>(clients.size()+1),
-        "User "+ QString::number(clients.size()+1),
-        true};
-
-
-    QByteArray data;
-    QDataStream ds(&data, QIODevice::ReadWrite);
-    ds.setVersion(QDataStream::Qt_5_11);
-    ds << eUserStatus<<  newUser;
-    qDebug() << "QByteArray size " << data.size();
-
-    qDebug() << "Client connected slot";
-    for(int i = 0; i < clients.size(); i++)
-    {
-        if(clients[i]->m_socket != nullptr)
-        {
-            clients[i]->m_socket->write(data);
-        }
-    }
-
+    return m_socket;
 }
 
 void SessionClient::disconnected()
 {
     qDebug() << "Client disconnected slot";
     UserStatus newUser {
-        static_cast<size_t>(clients.size()+1),
-        "User "+ QString::number(clients.size()+1),
+        static_cast<size_t>(DataStorage::getInstance()->getSessionClients().size()+1),
+        "User "+ QString::number(DataStorage::getInstance()->getSessionClients().size()+1),
         false};
 
 
@@ -62,13 +52,11 @@ void SessionClient::disconnected()
     ds.setVersion(QDataStream::Qt_5_11);
     ds << eUserStatus<<  newUser;
     qDebug() << "QByteArray size " << data.size();
-
-    qDebug() << "Client connected slot";
-    for(int i = 0; i < clients.size(); i++)
+    for(int i = 0; i < DataStorage::getInstance()->getSessionClients().size(); i++)
     {
-        if(clients[i]->m_socket != nullptr)
+        if(DataStorage::getInstance()->getSessionClients()[i]->m_socket != nullptr)
         {
-            clients[i]->m_socket->write(data);
+            DataStorage::getInstance()->getSessionClients()[i]->m_socket->write(data);
         }
     }
 }
@@ -82,7 +70,19 @@ void SessionClient::readyRead()
     QThreadPool::globalInstance()->start(director);
 }
 
-void SessionClient::result(int Number)
+void SessionClient::notifyEveryone(QByteArray data)
 {
+    qDebug() << "notifyEveryone Thread id" << QThread::currentThreadId() << " data size: " << data.size();
 
+    for(int i = 0; i < DataStorage::getInstance()->getSessionClients().size(); i++)
+    {
+        if(     (DataStorage::getInstance()->getSessionClients()[i]->m_socket != nullptr)
+                &&
+                (DataStorage::getInstance()->getSessionClients()[i]->m_socket->state()
+                == QAbstractSocket::SocketState::ConnectedState))
+        {
+            DataStorage::getInstance()->getSessionClients()[i]->m_socket->write(data);
+        }
+
+    }
 }

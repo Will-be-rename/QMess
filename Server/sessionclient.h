@@ -12,17 +12,21 @@ class SessionClient : public QObject
 public:
     explicit SessionClient(QObject *parent = nullptr);
     void SetSocket(qintptr handle);
+    QTcpSocket* GetSocket();
 signals:
 
 public slots:
-    void connected();
     void disconnected();
     void readyRead();
-    void result(int Number);
+    void notifyEveryone(QByteArray data);
+
+private:
+    void getUserId();
 
 private:
     QTcpSocket* m_socket;
+    int m_userId;
 
 };
-static QVector<SessionClient*> clients;
+
 #endif // SESSIONCLIENT_H
