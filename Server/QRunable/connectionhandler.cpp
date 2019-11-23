@@ -13,11 +13,12 @@ ConnectionHandler::ConnectionHandler(QObject *parent) : QObject(parent)
 void ConnectionHandler::run()
 {
     qDebug() << "Thread id" << QThread::currentThreadId();
-    UserStatus newUser {
-        static_cast<size_t>(DataStorage::getInstance()->getSessionClients().size()+1),
-        "User "+ QString::number(DataStorage::getInstance()->getSessionClients().size()+1),
-        true};
 
+    UserStatus newUser {
+        static_cast<size_t>(DataStorage::getInstance()->getSessionClients().size()),
+        "User "+ QString::number(DataStorage::getInstance()->getSessionClients().size()),
+        true};
+    emit userFound(newUser);
     QByteArray data;
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);

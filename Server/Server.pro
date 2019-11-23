@@ -20,6 +20,7 @@ SOURCES += \
         Handlers/eventhandler.cpp \
         QRunable/connectionhandler.cpp \
         QRunable/disconnectionhandler.cpp \
+        QRunable/setupuserhandler.cpp \
         main.cpp \
         QRunable/runnabledirector.cpp \
         serverrunner.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
         QRunable/connectionhandler.h \
         QRunable/disconnectionhandler.h \
         QRunable/runnabledirector.h \
+        QRunable/setupuserhandler.h \
         serverrunner.h \
         sessionclient.h
 

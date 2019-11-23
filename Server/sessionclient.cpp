@@ -9,6 +9,8 @@
 #include "models.h"
 #include "Data/datasrorage.h"
 #include "QRunable/connectionhandler.h"
+#include "QRunable/disconnectionhandler.h"
+#include "QRunable/setupuserhandler.h"
 SessionClient::SessionClient(QObject *parent) : QObject(parent)
 {
     qDebug() << "SessionClient ctor";
@@ -22,15 +24,9 @@ void SessionClient::SetSocket(qintptr handle)
     connect(m_socket,SIGNAL(disconnected()),this, SLOT(disconnected()), Qt::ConnectionType::AutoConnection);
     connect(m_socket,SIGNAL(readyRead()),   this, SLOT(readyRead()),    Qt::ConnectionType::AutoConnection);
 
-
     qDebug() << "Client connected" << "Thread id" << QThread::currentThreadId();
 
-    ConnectionHandler* director = new ConnectionHandler();
-    director->setAutoDelete(true);
-    QThreadPool::globalInstance()->start(director);
-    connect(director,SIGNAL(finish(QByteArray)),   this, SLOT(notifyEveryone(QByteArray)),    Qt::ConnectionType::QueuedConnection);
-
-    DataStorage::getInstance()->getSessionClients().push_back(this);
+    setUpUser();
 }
 
 QTcpSocket *SessionClient::GetSocket()
@@ -40,30 +36,14 @@ QTcpSocket *SessionClient::GetSocket()
 
 void SessionClient::disconnected()
 {
-    qDebug() << "Client disconnected slot";
-    UserStatus newUser {
-        static_cast<size_t>(DataStorage::getInstance()->getSessionClients().size()+1),
-        "User "+ QString::number(DataStorage::getInstance()->getSessionClients().size()+1),
-        false};
-
-
-    QByteArray data;
-    QDataStream ds(&data, QIODevice::ReadWrite);
-    ds.setVersion(QDataStream::Qt_5_11);
-    ds << eUserStatus<<  newUser;
-    qDebug() << "QByteArray size " << data.size();
-    for(int i = 0; i < DataStorage::getInstance()->getSessionClients().size(); i++)
-    {
-        if(DataStorage::getInstance()->getSessionClients()[i]->m_socket != nullptr)
-        {
-            DataStorage::getInstance()->getSessionClients()[i]->m_socket->write(data);
-        }
-    }
+    DisconnectionHandler* handler = new DisconnectionHandler();
+    handler->setAutoDelete(true);
+    QThreadPool::globalInstance()->start(handler);
+    connect(handler,SIGNAL(finish(QByteArray)),   this, SLOT(notifyEveryone(QByteArray)),    Qt::ConnectionType::QueuedConnection);
 }
 
 void SessionClient::readyRead()
 {
-    qDebug() << "readyRead " << m_socket->readAll();
     RunnableDirector* director = new RunnableDirector();
     director->setAutoDelete(true);
     director->setSocket(m_socket);
@@ -85,4 +65,39 @@ void SessionClient::notifyEveryone(QByteArray data)
         }
 
     }
+}
+
+void SessionClient::sendData(QTcpSocket *socket, QByteArray data)
+{
+    if(socket != nullptr &&
+       socket->state() == QAbstractSocket::SocketState::ConnectedState)
+    {
+        socket->write(data);
+    }
+}
+
+void SessionClient::setUserStatus(UserStatus newUser)
+{
+    m_user = newUser;
+}
+
+UserStatus SessionClient::getUserStatus()
+{
+    return m_user;
+}
+
+void SessionClient::setUpUser()
+{
+    ConnectionHandler* handler = new ConnectionHandler();
+    handler->setAutoDelete(true);
+    connect(handler,SIGNAL(finish(QByteArray)),   this, SLOT(notifyEveryone(QByteArray)), Qt::ConnectionType::QueuedConnection);
+    connect(handler,SIGNAL(userFound(UserStatus)),this, SLOT(setUserStatus(UserStatus)),  Qt::ConnectionType::QueuedConnection);
+    QThreadPool::globalInstance()->start(handler);
+
+    DataStorage::getInstance()->getSessionClients().push_back(this);
+
+    SetUpUserHandler* setUpHandler = new SetUpUserHandler();
+    setUpHandler->setAutoDelete(true);
+    connect(setUpHandler,SIGNAL(finish(QTcpSocket *, QByteArray)),   this, SLOT(sendData(QTcpSocket *, QByteArray)), Qt::ConnectionType::QueuedConnection);
+    QThreadPool::globalInstance()->start(setUpHandler);
 }

@@ -3,15 +3,18 @@
 
 #include <QRunnable>
 #include <QObject>
-#include <QAbstractSocket>
+#include <QTcpSocket>
 
-class RunnableDirector : public QRunnable
+class RunnableDirector : public QObject, public QRunnable
 {
+    Q_OBJECT
 public:
-    RunnableDirector();
+    explicit RunnableDirector(QObject *parent = nullptr);
     void setSocket(QAbstractSocket* socket);
 protected:
     void run() override;
+signals:
+    void finish(QTcpSocket* socket, QByteArray data);
 private:
     QAbstractSocket* socket;
 };

@@ -1,6 +1,6 @@
 #include "eventhandler.h"
 
-EventHandler::EventHandler(QTcpSocket* socket, QObject *parent) : QObject(parent), m_socket(socket)
+EventHandler::EventHandler(QObject *parent) : QObject(parent)
 {
 
 }

@@ -1,9 +1,10 @@
 #include "runnabledirector.h"
 #include "models.h"
+#include "Handlers/eventhandler.h"
 
 #include <QDataStream>
 
-RunnableDirector::RunnableDirector() : socket(nullptr)
+RunnableDirector::RunnableDirector(QObject *parent) : QObject(parent), socket(nullptr)
 {
 
 }
@@ -23,6 +24,7 @@ void RunnableDirector::run()
         qDebug() << "TcpDataProvider::getData size " << data.size();
         QDataStream ds(&data, QIODevice::ReadWrite);
         ds.setVersion(QDataStream::Qt_5_11);
+        EventHandler handler;
         while(!ds.atEnd())
         {
             ds >> m_CurrentMessage;
@@ -34,6 +36,7 @@ void RunnableDirector::run()
                     Message incommingMess;
                     ds >> incommingMess;
 
+                    handler.handleMessage(incommingMess);
                 }
                 break;
 
@@ -42,6 +45,7 @@ void RunnableDirector::run()
                     UserStatus userStat;
                     ds >> userStat;
 
+                    handler.handleUserStatus(userStat);
                 }
                 break;
 

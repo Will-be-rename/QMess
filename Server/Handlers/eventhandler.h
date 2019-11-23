@@ -10,16 +10,13 @@ class EventHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit EventHandler(QTcpSocket* socket, QObject *parent = nullptr);
+    explicit EventHandler(QObject *parent = nullptr);
     void handleHistoryRequest();
     void handleMessage(Message data);
     void handleUserStatus(UserStatus data);
 signals:
-
+    void finished(QTcpSocket* socket, QByteArray data);
 public slots:
-
-private:
-    QTcpSocket* m_socket;
 
 };
 
