@@ -14,7 +14,9 @@ public:
 protected:
     void run() override;
 signals:
-    void finish(QTcpSocket* socket, QByteArray data);
+    void finished(QTcpSocket* socket, QByteArray data);
+private slots:
+    void forward(QTcpSocket* socket, QByteArray data);
 private:
     QAbstractSocket* socket;
 };

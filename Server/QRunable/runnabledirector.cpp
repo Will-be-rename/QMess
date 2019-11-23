@@ -35,7 +35,8 @@ void RunnableDirector::run()
                 {
                     Message incommingMess;
                     ds >> incommingMess;
-
+                    connect(&handler,SIGNAL(finish(QTcpSocket *, QByteArray)),
+                                this, SLOT(forward(QTcpSocket *, QByteArray)), Qt::ConnectionType::QueuedConnection);
                     handler.handleMessage(incommingMess);
                 }
                 break;
@@ -62,4 +63,9 @@ void RunnableDirector::run()
             }
         }
     }
+}
+
+void RunnableDirector::forward(QTcpSocket *socket, QByteArray data)
+{
+    emit finished(socket, data);
 }

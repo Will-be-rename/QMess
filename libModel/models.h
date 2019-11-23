@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QDataStream>
+#include <QVector>
 
 struct Message
 {
@@ -30,6 +31,19 @@ struct LoginPackage
     QByteArray m_password; // hash of password
 };
 
+struct UserData
+{
+    size_t              m_userId;
+    QString             m_userName;
+    QVector<UserStatus> m_friends;
+};
+
+struct HistoryData
+{
+    size_t              m_currentUserId;
+    size_t              m_friendUserId;
+    QVector<Message>    m_historyData;
+};
 enum PackageType
 {
     eUserStatus,
@@ -37,6 +51,7 @@ enum PackageType
     eMessageHistoryRequest,
     eMessageHistoryResponse,
     eCurrentUserResponse,
+    eCurrentUserRequest,
 };
 
 #endif //  MODELS_H
