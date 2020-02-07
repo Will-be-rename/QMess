@@ -22,8 +22,8 @@ public slots:
     void readyRead();
     void notifyEveryone(QByteArray data);
     void sendData(QTcpSocket* socket, QByteArray data);
-private:
     void setUserStatus(UserStatus newUser);
+private:
     void setUpUser();
 
 private:

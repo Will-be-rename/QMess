@@ -76,6 +76,6 @@ void TcpDataProvider::getData(QTcpSocket &socket)
             case  eMessageHistoryRequest:
             default:
             break;
-        };
+        }
     }
 }

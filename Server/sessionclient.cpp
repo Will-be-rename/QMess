@@ -97,9 +97,9 @@ void SessionClient::setUpUser()
     QThreadPool::globalInstance()->start(handler);
 
     DataStorage::getInstance()->getSessionClients().push_back(this);
-
     SetUpUserHandler* setUpHandler = new SetUpUserHandler();
     setUpHandler->setAutoDelete(true);
+    setUpHandler->setSession(this);
     connect(setUpHandler,SIGNAL(finish(QTcpSocket *, QByteArray)),   this, SLOT(sendData(QTcpSocket *, QByteArray)), Qt::ConnectionType::QueuedConnection);
     QThreadPool::globalInstance()->start(setUpHandler);
 }

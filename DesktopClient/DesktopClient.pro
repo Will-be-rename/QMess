@@ -24,19 +24,24 @@ DEFINES -= QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         cachedmessagehistory.cpp \
+        loginwindow.cpp \
         main.cpp \
         chatwindow.cpp \
         eventmessageprocessor.cpp \
-        datastorage.cpp
+        datastorage.cpp \
+        windowcontroller.cpp
 
 HEADERS += \
         cachedmessagehistory.h \
         chatwindow.h \
         eventmessageprocessor.h \
-        datastorage.h
+        datastorage.h \
+        loginwindow.h \
+        windowcontroller.h
 
 FORMS += \
-        chatwindow.ui
+        chatwindow.ui \
+        loginwindow.ui
 
 RESOURCES += \
     images/imagesresource.qrc
