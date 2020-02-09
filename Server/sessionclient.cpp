@@ -7,7 +7,6 @@
 #include <QMutex>
 
 #include "models.h"
-#include "Data/datasrorage.h"
 #include "QRunable/connectionhandler.h"
 #include "QRunable/disconnectionhandler.h"
 #include "QRunable/setupuserhandler.h"
@@ -56,17 +55,7 @@ void SessionClient::notifyEveryone(QByteArray data)
 {
     qDebug() << "notifyEveryone Thread id" << QThread::currentThreadId() << " data size: " << data.size();
 
-    for(int i = 0; i < DataStorage::getInstance()->getSessionClients().size(); i++)
-    {
-        if(     (DataStorage::getInstance()->getSessionClients()[i]->m_socket != nullptr)
-                &&
-                (DataStorage::getInstance()->getSessionClients()[i]->m_socket->state()
-                == QAbstractSocket::SocketState::ConnectedState))
-        {
-            DataStorage::getInstance()->getSessionClients()[i]->m_socket->write(data);
-        }
-
-    }
+    emit notifyEveryoneSignal(data);
 }
 
 void SessionClient::sendData(QTcpSocket *socket, QByteArray data)
@@ -83,20 +72,49 @@ void SessionClient::setUserStatus(UserStatus newUser)
     m_user = newUser;
 }
 
+void SessionClient::setUserStatus(size_t      m_userId,
+                                  QString     m_userName,
+                                  bool        m_isOnline)
+{
+    UserStatus newUser{m_userId, m_userName, m_isOnline};
+    m_user = newUser;
+}
+
+void SessionClient::notifyRecieverSlot(QByteArray data, size_t recieverId)
+{
+    // provide signal to upper level
+    emit notifyReciever(data, recieverId);
+}
+
+void SessionClient::notifySenderSlot(QByteArray data, size_t senderId)
+{
+    // provide signal to upper level
+    emit notifySender(data, senderId);
+}
+
 UserStatus SessionClient::getUserStatus()
 {
     return m_user;
+}
+
+bool SessionClient::operator==(const SessionClient &other)
+{
+    bool result = false;
+    if(other.m_user.m_userId == this->m_user.m_userId)
+    {
+        result = true;
+    }
+    return result;
 }
 
 void SessionClient::setUpUser()
 {
     ConnectionHandler* handler = new ConnectionHandler();
     handler->setAutoDelete(true);
-    connect(handler,SIGNAL(finish(QByteArray)),   this, SLOT(notifyEveryone(QByteArray)), Qt::ConnectionType::QueuedConnection);
-    connect(handler,SIGNAL(userFound(UserStatus)),this, SLOT(setUserStatus(UserStatus)),  Qt::ConnectionType::QueuedConnection);
+    connect(handler,SIGNAL(finish(QByteArray)),             this, SLOT(notifyEveryone(QByteArray)),         Qt::ConnectionType::QueuedConnection);
+    connect(handler,SIGNAL(userFound(size_t,QString,bool)), this, SLOT(setUserStatus(size_t,QString,bool)), Qt::ConnectionType::QueuedConnection);
     QThreadPool::globalInstance()->start(handler);
 
-    DataStorage::getInstance()->getSessionClients().push_back(this);
     SetUpUserHandler* setUpHandler = new SetUpUserHandler();
     setUpHandler->setAutoDelete(true);
     setUpHandler->setSession(this);

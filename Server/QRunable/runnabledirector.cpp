@@ -65,6 +65,16 @@ void RunnableDirector::run()
     }
 }
 
+void RunnableDirector::notifyRecieverProvider(QByteArray data, size_t recieverId)
+{
+    emit notifyReciever(data, recieverId);
+}
+
+void RunnableDirector::notifySenderProvider(QByteArray data, size_t senderId)
+{
+    emit notifySender(data, senderId);
+}
+
 void RunnableDirector::forward(QTcpSocket *socket, QByteArray data)
 {
     emit finished(socket, data);

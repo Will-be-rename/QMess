@@ -14,8 +14,12 @@ public:
 protected:
     void run() override;
 signals:
+    void notifyReciever(QByteArray data, size_t recieverId);
+    void notifySender(QByteArray data, size_t senderId);
     void finished(QTcpSocket* socket, QByteArray data);
 private slots:
+    void notifyRecieverProvider(QByteArray data, size_t recieverId);
+    void notifySenderProvider(QByteArray data, size_t senderId);
     void forward(QTcpSocket* socket, QByteArray data);
 private:
     QAbstractSocket* socket;
