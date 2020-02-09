@@ -15,7 +15,8 @@ public:
     void handleMessage(Message data);
     void handleUserStatus(UserStatus data);
 signals:
-    void finished(QTcpSocket* socket, QByteArray data);
+    void notifyReciever(QByteArray data, size_t recieverId);
+    void notifySender(QByteArray data, size_t senderId);
 public slots:
 
 };
