@@ -14,6 +14,6 @@ WindowController::~WindowController()
 
 void WindowController::start()
 {
-    m_chatWindow->show();
+    m_loginWindow->show();
 }
 
