@@ -8,9 +8,9 @@ Window {
     title: qsTr("MainWindow")
     Rectangle
     {
-        width: 480
-        height: 1080
-        color: "#5DBCD2"
+        width: parent.width / 4
+        height: parent.height
+        color: "#adcaf7"
         ListModel {
             id: onlineUsersList
 
@@ -42,22 +42,24 @@ Window {
         }
         Component
         {
-            id: fruitDelegate
+            id: userDelegate
             Row
             {
                 padding: 10
                 spacing: 100
                 Rectangle
                 {
-                    color: "#800000FF"
+                    color: "#3f81e8"
                     width: 460
                     height: 60
                     border.width: 5
+                    border.color: "#8c97a8"
                     radius: 5
                     Text
                     {
                         text: "  " + name
-                        font.bold: true
+                        font.family: "Helvetica"
+                        color: "#383838"
                         font.pixelSize: 48
                     }
                     Rectangle
@@ -78,14 +80,14 @@ Window {
         {
             anchors.fill: parent
             model: onlineUsersList
-            delegate: fruitDelegate
+            delegate: userDelegate
             focus: true
             highlight:
             Rectangle
             {
                 width: 380
                 height: 40
-                color: "#FFFF88"
+                color: "#896db0"
             }
         }
     }
