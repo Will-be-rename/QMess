@@ -1,7 +1,10 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import QtQuick.Controls 2.12
 
 Window {
+    id: mainWindow
+
     visible: true
     width: 1920
     height: 1080
@@ -9,6 +12,7 @@ Window {
     Rectangle
     {
         id: listRectangle
+
         width: parent.width / 4
         height: parent.height
         color: "#adcaf7"
@@ -104,6 +108,7 @@ Window {
                 Rectangle
                 {
                     id: rowRectangle
+
                     color: "#3f81e8"
                     width: 460
                     height: 60
@@ -112,15 +117,16 @@ Window {
                     radius: 5
                     Text
                     {
-                        text: "  " + name
+                        leftPadding: font.pixelSize / 2
+                        text: name
                         font.family: "Helvetica"
                         color: "#383838"
                         font.pixelSize: 48
                     }
                     Rectangle
                     {
-                         width: 30
-                         height: 30
+                         width: 25
+                         height: 25
                          anchors.bottom: parent.bottom
                          color: online ? "green" : "gray"
                          border.color: "#0a2f4a"
@@ -130,8 +136,10 @@ Window {
                     MouseArea
                     {
                         id: mouse
+
                         anchors.fill: parent
                         hoverEnabled: true
+
                         onClicked: userListView.currentIndex = index
                         onEntered:
                         {
@@ -150,6 +158,7 @@ Window {
         ListView
         {
             id: userListView
+
             anchors.fill: parent
             model: onlineUsersList
             delegate: userDelegate
@@ -171,12 +180,14 @@ Window {
         anchors.left: listRectangle.right
         Rectangle
         {
+            id: statusBarRectangle
 
             width: parent.width
             height: 60
             color: "#fff0f5"
             Text
             {
+                leftPadding: font.pixelSize / 2
                 font.family: "Helvetica"
                 color: "#000f0b"
                 font.pixelSize: 40
@@ -186,10 +197,63 @@ Window {
         }
         Rectangle
         {
+            width:  parent.width
+            height: parent.height - statusBarRectangle.height - textinputRectangle.height
+            anchors.top: statusBarRectangle.bottom
+            anchors.bottom: textinputRectangle.top
+            anchors.left: mainWindow.left
+            color: "#d3d3d3"
+        }
+        Rectangle
+        {
+            id: textinputRectangle
             width: parent.width
             height: 60
             color: "#fff0f5"
             anchors.bottom: parent.bottom
+            TextInput
+            {
+               id: textIntupField
+
+                height: parent.height
+                width: parent.width * 0.9
+                padding: 8
+                font.family: "Helvetica"
+                font.pixelSize: 32
+                font.italic: true
+                text: "Enter text here..."
+                opacity: 0.2
+                cursorVisible: true
+                focus: true
+                MouseArea
+                {
+                    id: mouseInput
+
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onClicked:
+                    {
+                        textIntupField.text = ""
+                        textIntupField.opacity = 1.0
+                    }
+
+                }
+            }
+            Button
+            {
+                id: textInputButton
+
+                height: parent.height
+                width: parent.width * 0.1
+                anchors.right: parent.right
+                text: "Send"
+                highlighted: true
+                onClicked:
+                {
+                    textIntupField.opacity = 0.2
+                    textIntupField.text = "Enter text here..."
+                }
+            }
         }
     }
 }
