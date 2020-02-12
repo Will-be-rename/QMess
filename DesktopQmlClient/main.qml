@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import Users 1.0
 
 Window {
     id: mainWindow
@@ -18,7 +19,7 @@ Window {
         color: "#adcaf7"
         border.color: "#d3d3d3"
         border.width: 4
-        ListModel {
+        /*ListModel {
             id: onlineUsersList
 
             ListElement {
@@ -96,7 +97,7 @@ Window {
                 name: "qml list"
                 online: true
             }
-        }
+        } */
         Component
         {
             id: userDelegate
@@ -160,7 +161,10 @@ Window {
             id: userListView
 
             anchors.fill: parent
-            model: onlineUsersList
+            model: UserModel
+            {
+
+            }
             delegate: userDelegate
             focus: true
             highlight:
