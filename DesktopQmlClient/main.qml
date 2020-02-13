@@ -16,112 +16,27 @@ Window {
 
         width: parent.width / 4
         height: parent.height
-        color: "#adcaf7"
-        border.color: "#d3d3d3"
-        border.width: 4
-        /*ListModel {
-            id: onlineUsersList
+        color: "#B5D6BE"
 
-            ListElement {
-                userId: 1
-                name: "User test"
-                online: false
-            }
-            ListElement {
-                userId: 2
-                name: "test user 55"
-                online: true
-            }
-            ListElement {
-                userId: 3
-                name: "third user"
-                online: true
-            }
-            ListElement {
-                userId: 4
-                name: "next user"
-                online: true
-            }
-            ListElement {
-                userId: 6
-                name: "not advanced c++"
-                online: true
-            }
-            ListElement {
-                userId: 7
-                name: "7 User test"
-                online: false
-            }
-            ListElement {
-                userId: 8
-                name: "8 test user 55"
-                online: true
-            }
-            ListElement {
-                userId: 9
-                name: "9 third user"
-                online: true
-            }
-            ListElement {
-                userId: 10
-                name: "10 next user"
-                online: true
-            }
-            ListElement {
-                userId: 11
-                name: "now advanced c++"
-                online: true
-            }
-            ListElement {
-                userId: 12
-                name: "some"
-                online: false
-            }
-            ListElement {
-                userId: 13
-                name: "more"
-                online: true
-            }
-            ListElement {
-                userId: 14
-                name: "elements"
-                online: true
-            }
-            ListElement {
-                userId: 15
-                name: "in fucking"
-                online: true
-            }
-            ListElement {
-                userId: 16
-                name: "qml list"
-                online: true
-            }
-        } */
         Component
         {
-            id: userDelegate
+            id: userDelegate   
             Row
             {
-                padding: 5
-                spacing: 100
 
+                anchors.bottomMargin: 10
                 Rectangle
                 {
                     id: rowRectangle
-
-                    color: "#3f81e8"
-                    width: 460
+                    color: "#dff5e5"
+                    width: 480
                     height: 60
-                    border.width: 5
-                    border.color: "#8c97a8"
-                    radius: 5
+                    opacity: 0.8
                     Text
                     {
                         leftPadding: font.pixelSize / 2
                         text: name
                         font.family: "Helvetica"
-                        color: "#383838"
                         font.pixelSize: 48
                     }
                     Rectangle
@@ -144,11 +59,11 @@ Window {
                         onClicked: userListView.currentIndex = index
                         onEntered:
                         {
-                            rowRectangle.color = "#896db0"
+                            rowRectangle.color = "#A6F4ED"
                         }
                         onExited:
                         {
-                            rowRectangle.color = "#3f81e8"
+                            rowRectangle.color = "#dff5e5"
                         }
 
                     }
@@ -159,22 +74,30 @@ Window {
         ListView
         {
             id: userListView
-
+            currentIndex: 0
             anchors.fill: parent
+            highlightFollowsCurrentItem: false
             model: UserModel
             {
-
+                id: onlineUsersList
             }
             delegate: userDelegate
+            spacing: 1
             focus: true
             highlight:
+                Row
+                {
                         Rectangle
                         {
-                            width: 400
-                            height: 40
-                            color: "#896db0"
+                            color: "#4b97fa"
+                            width: 480
+                            height: 60
+                            radius: 5
+                            y:  userListView.currentItem.y
                         }
+                }
         }
+
     }
     Rectangle
     {
@@ -195,7 +118,7 @@ Window {
                 font.family: "Helvetica"
                 color: "#000f0b"
                 font.pixelSize: 40
-                text: onlineUsersList.get(userListView.currentIndex).name
+                text: onlineUsersList.getUserName(userListView.currentIndex)
 
             }
         }
@@ -217,7 +140,7 @@ Window {
             anchors.bottom: parent.bottom
             TextInput
             {
-               id: textIntupField
+               id: textInputField
 
                 height: parent.height
                 width: parent.width * 0.9
@@ -225,23 +148,25 @@ Window {
                 font.family: "Helvetica"
                 font.pixelSize: 32
                 font.italic: true
-                text: "Enter text here..."
-                opacity: 0.2
                 cursorVisible: true
                 focus: true
-                MouseArea
+                onTextEdited:
                 {
-                    id: mouseInput
-
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked:
-                    {
-                        textIntupField.text = ""
-                        textIntupField.opacity = 1.0
-                    }
-
+                    text == "" ? textInputBackground.visible = true : textInputBackground.visible = false
                 }
+            }
+            Text
+            {
+                id: textInputBackground
+                height: parent.height
+                width: parent.width * 0.9
+                visible: true
+                opacity: 0.2
+                padding: 8
+                font.family: "Helvetica"
+                font.pixelSize: 32
+                font.italic: true
+                text: "Enter text here..."
             }
             Button
             {
@@ -254,10 +179,11 @@ Window {
                 highlighted: true
                 onClicked:
                 {
-                    textIntupField.opacity = 0.2
-                    textIntupField.text = "Enter text here..."
+                    textInputField.text = ""
+                    textInputBackground.visible = true
                 }
             }
+
         }
     }
 }

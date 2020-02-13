@@ -68,5 +68,20 @@ void UserModel::addUsers()
     m_users.push_back({5,"Tebe", false});
     m_users.push_back({6,"This", true});
     m_users.push_back({7,"Fucking", false});
-    m_users.push_back({7,"List", true});
+    m_users.push_back({8,"List", true});
+
+    m_users.push_back({9,"User 1 ", true});
+    m_users.push_back({10,"Hello ", true});
+    m_users.push_back({11,"Maksym ", false});
+    m_users.push_back({3,"Ostrometskyi ", true});
+    m_users.push_back({4,"Kak", true});
+    m_users.push_back({5,"Tebe", false});
+    m_users.push_back({6,"This", true});
+    m_users.push_back({7,"Fucking", false});
+    m_users.push_back({8,"List", true});
+}
+
+QVariant UserModel::getUserName(int index)
+{
+    return QVariant::fromValue(m_users[index].getUserName());
 }
