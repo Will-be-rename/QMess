@@ -15,6 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
+        messagesmodel.cpp \
         user.cpp \
         usermodel.cpp
 
@@ -27,10 +28,22 @@ QML_IMPORT_PATH =
 QML_DESIGNER_IMPORT_PATH =
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-libModel/release/ -llibModel
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-libModel/debug/ -llibModel
+else:unix: LIBS += -L$$PWD/../build-libModel/ -llibModel
+
+INCLUDEPATH += $$PWD/../libModel
+
+INCLUDEPATH += $$PWD/../build-libModel/release
+DEPENDPATH += $$PWD/../build-libModel/release
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-libModel/release/liblibModel.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-libModel/debug/liblibModel.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-libModel/release/libModel.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-libModel/debug/libModel.lib
+else:unix: PRE_TARGETDEPS += $$PWD/../build-libModel/liblibModel.a
 
 HEADERS += \
+    messagesmodel.h \
     user.h \
     usermodel.h
