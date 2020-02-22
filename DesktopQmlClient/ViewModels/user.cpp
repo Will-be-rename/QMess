@@ -1,10 +1,12 @@
 #include "user.h"
+#include <QRandomGenerator>
 
 User::User(const size_t& userId, const QString& name, const bool& online):
            m_userId(userId),
            m_name(name),
            m_online(online)
 {
+    m_incommingMessages = QRandomGenerator::global()->generate() % 3;
 }
 
 size_t User::getUserId() const
@@ -18,4 +20,9 @@ QString User::getUserName() const
 bool User::isOnline() const
 {
     return m_online;
+}
+int User::getIncommningMessages() const
+{
+
+    return m_incommingMessages;
 }

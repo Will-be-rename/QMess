@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>QmlViews/ChatWindowView.qml</file>
+        <file>QmlViews/MessagesView.qml</file>
+        <file>QmlViews/UserListView.qml</file>
     </qresource>
 </RCC>

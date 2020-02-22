@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include "usermodel.h"
+#include "ViewModels/usermodel.h"
 
 int main(int argc, char *argv[])
 {

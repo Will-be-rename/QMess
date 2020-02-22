@@ -12,7 +12,7 @@ QHash<int, QByteArray> UserModel::roleNames() const
     roles[UserRoles::IdRole] = "userId";
     roles[UserRoles::NameRole] = "name";
     roles[UserRoles::OnlineRole] = "online";
-
+    roles[UserRoles::IncommingMessages] = "incommingMessages";
     return roles;
 }
 
@@ -45,6 +45,10 @@ QVariant UserModel::data(const QModelIndex& index, int role) const
         {
             return QVariant::fromValue(user.isOnline());
         }
+        case IncommingMessages:
+        {
+            return QVariant::fromValue(user.getIncommningMessages());
+        }
         default:
         {
         return {};
@@ -60,28 +64,20 @@ void UserModel::registerMe(const std::string &moduleName)
 
 void UserModel::addUsers()
 {
-    m_users.push_back({0,"User 1 ", true});
-    m_users.push_back({1,"Hello ", true});
-    m_users.push_back({2,"Maksym ", false});
-    m_users.push_back({3,"Ostrometskyi ", true});
-    m_users.push_back({4,"Kak", true});
-    m_users.push_back({5,"Tebe", false});
-    m_users.push_back({6,"This", true});
-    m_users.push_back({7,"Fucking", false});
-    m_users.push_back({8,"List", true});
+    for(int i = 0 ; i < 100; i++)
+    {
+        m_users.push_back({i,"User " + QString::number(i), i%3});
+    }
 
-    m_users.push_back({9,"User 1 ", true});
-    m_users.push_back({10,"Hello ", true});
-    m_users.push_back({11,"Maksym ", false});
-    m_users.push_back({3,"Ostrometskyi ", true});
-    m_users.push_back({4,"Kak", true});
-    m_users.push_back({5,"Tebe", false});
-    m_users.push_back({6,"This", true});
-    m_users.push_back({7,"Fucking", false});
-    m_users.push_back({8,"List", true});
 }
 
 QVariant UserModel::getUserName(int index)
 {
     return QVariant::fromValue(m_users[index].getUserName());
 }
+
+void UserModel::selectionChanged(int index)
+{
+
+}
+

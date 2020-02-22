@@ -11,10 +11,12 @@ public:
     size_t  getUserId() const;
     QString getUserName() const;
     bool    isOnline() const;
+    int getIncommningMessages() const;
 private:
     size_t  m_userId;
     QString m_name;
     bool    m_online;
+    int m_incommingMessages;
 };
 
 #endif // USER_H

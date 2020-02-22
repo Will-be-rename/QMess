@@ -14,10 +14,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        ViewModels/messagesmodel.cpp \
+        ViewModels/user.cpp \
+        ViewModels/usermodel.cpp \
         main.cpp \
-        messagesmodel.cpp \
-        user.cpp \
-        usermodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -44,6 +44,7 @@ else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../b
 else:unix: PRE_TARGETDEPS += $$PWD/../build-libModel/liblibModel.a
 
 HEADERS += \
-    messagesmodel.h \
-    user.h \
-    usermodel.h
+    ViewModels/messagesmodel.h \
+    ViewModels/user.h \
+    ViewModels/usermodel.h \
+
