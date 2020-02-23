@@ -4,7 +4,7 @@
 
 MessagesModel::MessagesModel()
 {
-
+    addMessages();
 }
 
 QHash<int, QByteArray> MessagesModel::roleNames() const
@@ -13,7 +13,7 @@ QHash<int, QByteArray> MessagesModel::roleNames() const
     roles[MessagesModel::IdRole] = "messageId";
     roles[MessagesModel::SenderRole] = "senderId";
     roles[MessagesModel::ReceiverRole] = "receiverId";
-    roles[MessagesModel::TextRole] = "text";
+    roles[MessagesModel::TextRole] = "textBody";
     roles[MessagesModel::DateTimeRole] = "dateTime";
 
     return roles;
@@ -67,4 +67,11 @@ QVariant MessagesModel::data(const QModelIndex& index, int role) const
 void MessagesModel::registerMe(const std::string &moduleName)
 {
     qmlRegisterType<MessagesModel>(moduleName.c_str(),1,0,"MessagesModel");
+}
+
+
+void MessagesModel::addMessages()
+{
+    m_messages.push_back({1,2,3,"Hello",""});
+    m_messages.push_back({1,2,3,"How difficult was to create this fucking model!!!",""});
 }

@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 
 #include "ViewModels/usermodel.h"
+#include "ViewModels/messagesmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     UserModel::registerMe("Users");
+    MessagesModel::registerMe("Messages");
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
