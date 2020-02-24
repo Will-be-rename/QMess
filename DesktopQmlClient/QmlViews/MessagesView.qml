@@ -15,6 +15,7 @@ Rectangle
         width: parent.width
         height: 60
         color: "#fff0f5"
+        z:1
         Text
         {
             leftPadding: font.pixelSize / 2
@@ -40,14 +41,21 @@ Rectangle
 
             Row
             {
-                topPadding: 32
+                topPadding: 25
                 leftPadding: 34
                 rightPadding: 945
-                bottomPadding: 15
                 ItemDelegate
                 {
                     width: 300
-                    height: messagesRectangle.height * 0.05
+                    implicitHeight: Math.max(rowText.implicitHeight)
+                    MouseArea
+                    {
+                        hoverEnabled: false
+                        anchors.fill: parent
+                        onClicked:
+                        {
+                        }
+                    }
                     contentItem :
                     Item
                     {
@@ -65,7 +73,7 @@ Rectangle
                             anchors.top: parent.top
                             anchors.left:contactIcon.right
                             anchors.leftMargin: 28
-                            height: 60
+                            implicitHeight: Math.max(rowText.implicitHeight)
                             width: 376
                             color: "#d4d4d4"
                             radius: width * 0.1
@@ -74,14 +82,16 @@ Rectangle
                                 id: rowText
                                 anchors.top: parent.top
                                 anchors.left: parent.left
-                                anchors.topMargin: 20
-                                anchors.leftMargin: 24
-                                anchors.bottomMargin: 22
+                                topPadding: 20
+                                leftPadding: 24
+                                bottomPadding: 22
+                                rightPadding: 60
                                 text: textBody
                                 font.family: "Font Awesome 5"
                                 color: "white"
                                 font.pixelSize: 16
-                                lineHeight: 18
+                                width: parent.width
+                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
                         }
                     }
@@ -94,6 +104,7 @@ Rectangle
             id: messagesListView
             currentIndex: 0
             anchors.fill: parent
+            anchors.topMargin: 20
             highlightFollowsCurrentItem: false
             model: MessagesModel
             {
