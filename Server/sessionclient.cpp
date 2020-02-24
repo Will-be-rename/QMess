@@ -80,6 +80,12 @@ void SessionClient::setUserStatus(size_t      m_userId,
     UserStatus newUser{m_userId, m_userName, m_isOnline};
     m_user = newUser;
     emit userReady(this);
+
+    QByteArray data;
+    QDataStream ds(&data, QIODevice::ReadWrite);
+    ds.setVersion(QDataStream::Qt_5_11);
+    ds << eCurrentUserResponse <<  m_user;
+    m_socket->write(data);
 }
 
 
