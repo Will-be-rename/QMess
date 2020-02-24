@@ -10,12 +10,6 @@ Window {
     width: 1920
     height: 1080
     title: qsTr("MainWindow")
-    UserListView
-    {
-        id: _listRectangle
-    }
-    MessagesView
-    {
-        anchors.left: _listRectangle.right
-    }
+
+    ChatWindowView { }
 }

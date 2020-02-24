@@ -6,10 +6,7 @@ Rectangle
 {
     id: listRectangle
 
-    width: parent.width / 4
-    height: parent.height
-    color: "#94918E"
-
+    layer.enabled: true
     Component
     {
         id: userDelegate
