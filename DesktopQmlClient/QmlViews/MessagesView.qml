@@ -41,14 +41,13 @@ Rectangle
 
             Row
             {
-                topPadding: 32
+                topPadding: 25
                 leftPadding: 34
                 rightPadding: 945
-                bottomPadding: 15
                 ItemDelegate
                 {
                     width: 300
-                    height: messagesRectangle.height * 0.05
+                    implicitHeight: Math.max(rowText.implicitHeight)
                     MouseArea
                     {
                         hoverEnabled: false
@@ -105,6 +104,7 @@ Rectangle
             id: messagesListView
             currentIndex: 0
             anchors.fill: parent
+            anchors.topMargin: 20
             highlightFollowsCurrentItem: false
             model: MessagesModel
             {
