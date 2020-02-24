@@ -73,5 +73,5 @@ void MessagesModel::registerMe(const std::string &moduleName)
 void MessagesModel::addMessages()
 {
     m_messages.push_back({1,2,3,"Hello",""});
-    m_messages.push_back({1,2,3,"How difficult was to create this fucking model!!!",""});
+    m_messages.push_back({1,2,3,"Lorem Ipsum - это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.",""});
 }
