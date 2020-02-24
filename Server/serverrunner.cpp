@@ -33,7 +33,7 @@ void ServerRunner::incomingConnection(qintptr handle)
     connect(client,SIGNAL(notifyEveryoneSignal(QByteArray)),
                 this, SLOT(notifyEveryone(QByteArray)));
 
-    connect(client,SIGNAL(notifyUserSlot(QByteArray, size_t)),
+    connect(client,SIGNAL(notifyUser(QByteArray, size_t)),
                 this, SLOT(notify(QByteArray, size_t)));
 
     connect(client,SIGNAL(userReady(SessionClient*)),

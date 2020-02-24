@@ -32,12 +32,15 @@ QTcpSocket *SessionClient::GetSocket()
 
 void SessionClient::disconnected()
 {
-    DisconnectionHandler* handler = new DisconnectionHandler();
-    handler->setAutoDelete(true);
-    m_user.m_isOnline = false;
-    handler->setUser(m_user);
-    QThreadPool::globalInstance()->start(handler);
-    connect(handler,SIGNAL(finish(QByteArray)),   this, SLOT(notifyEveryone(QByteArray)),    Qt::ConnectionType::QueuedConnection);
+    if(m_user.m_userId != static_cast<size_t>(-1))
+    {
+        DisconnectionHandler* handler = new DisconnectionHandler();
+        handler->setAutoDelete(true);
+        m_user.m_isOnline = false;
+        handler->setUser(m_user);
+        QThreadPool::globalInstance()->start(handler);
+        connect(handler,SIGNAL(finish(QByteArray)),   this, SLOT(notifyEveryone(QByteArray)),    Qt::ConnectionType::QueuedConnection);
+    }
 }
 
 void SessionClient::readyRead()
