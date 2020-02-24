@@ -4,7 +4,7 @@
 #include <QAbstractListModel>
 #include <vector>
 
-#include "models.h"
+#include "ViewModels/messageview.h"
 
 class MessagesModel : public QAbstractListModel
 {
@@ -17,13 +17,12 @@ public:
     void addMessages(); //will be removed
 
 private:
-    std::vector <Message> m_messages;
+    std::vector <MessageView> m_messages;
     enum MessageRoles{
-         IdRole = Qt::UserRole + 1,
-         SenderRole,
-         ReceiverRole,
-         TextRole,
-         DateTimeRole,
+         TextBodyRole = Qt::UserRole + 1,
+         DateRole,
+         TimeRole,
+         IsReceivedRole,
     };
 };
 

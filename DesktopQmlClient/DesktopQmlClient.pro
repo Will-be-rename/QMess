@@ -15,6 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         ViewModels/messagesmodel.cpp \
+    ViewModels/messageview.cpp \
         ViewModels/user.cpp \
         ViewModels/usermodel.cpp \
         main.cpp \
@@ -45,6 +46,7 @@ else:unix: PRE_TARGETDEPS += $$PWD/../build-libModel/liblibModel.a
 
 HEADERS += \
     ViewModels/messagesmodel.h \
+    ViewModels/messageview.h \
     ViewModels/user.h \
     ViewModels/usermodel.h \
 
