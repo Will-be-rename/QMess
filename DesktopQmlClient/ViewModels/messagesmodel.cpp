@@ -63,7 +63,6 @@ void MessagesModel::registerMe(const std::string &moduleName)
     qmlRegisterType<MessagesModel>(moduleName.c_str(),1,0,"MessagesModel");
 }
 
-
 void MessagesModel::addMessages()
 {
     m_messages.push_back({"Hello",QDateTime()});
