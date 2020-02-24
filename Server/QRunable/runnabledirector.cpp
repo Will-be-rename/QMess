@@ -35,8 +35,6 @@ void RunnableDirector::run()
                 {
                     Message incommingMess;
                     ds >> incommingMess;
-                    connect(&handler,SIGNAL(finish(QTcpSocket *, QByteArray)),
-                                this, SLOT(forward(QTcpSocket *, QByteArray)), Qt::ConnectionType::QueuedConnection);
                     handler.handleMessage(incommingMess);
                 }
                 break;
@@ -50,11 +48,9 @@ void RunnableDirector::run()
                 }
                 break;
 
-                case eCurrentUserResponse:
+                case eCurrentUserRequest:
                 {
-                    UserStatus userStat;
-                    ds >> userStat;
-
+                    emit currentUserRequest();
                 }
                 break;
                 case  eMessageHistoryRequest:
@@ -75,7 +71,3 @@ void RunnableDirector::notifySenderProvider(QByteArray data, size_t senderId)
     emit notifySender(data, senderId);
 }
 
-void RunnableDirector::forward(QTcpSocket *socket, QByteArray data)
-{
-    emit finished(socket, data);
-}

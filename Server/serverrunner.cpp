@@ -33,22 +33,23 @@ void ServerRunner::incomingConnection(qintptr handle)
     connect(client,SIGNAL(notifyEveryoneSignal(QByteArray)),
                 this, SLOT(notifyEveryone(QByteArray)));
 
-    connect(client,SIGNAL(notifyReciever(QByteArray, size_t)),
+    connect(client,SIGNAL(notifyUserSlot(QByteArray, size_t)),
                 this, SLOT(notify(QByteArray, size_t)));
 
-    connect(client,SIGNAL(notifySender(QByteArray, size_t)),
-                this, SLOT(notify(QByteArray, size_t)));
+    connect(client,SIGNAL(userReady(SessionClient*)),
+                this, SLOT(addConnection(SessionClient*)));
 
     client->SetSocket(handle);
-    m_clients.push_back(client);
-
 }
 
 void ServerRunner::notifyEveryone(QByteArray bytes)
 {
     for(auto item : m_clients)
     {
-        item->GetSocket()->write(bytes);
+        if(item->getUserStatus().m_userId == static_cast<size_t>(-1))
+        {
+            item->GetSocket()->write(bytes);
+        }
     }
 }
 
@@ -61,5 +62,14 @@ void ServerRunner::notify(QByteArray bytes, size_t clientId)
             item->GetSocket()->write(bytes);
         }
     }
+}
+
+void ServerRunner::addConnection(SessionClient* connection)
+{
+    for(auto item : m_clients)
+    {
+        connection->GetSocket()->write(item->getUserStatusBytes());
+    }
+    m_clients.push_back(connection);
 }
 
