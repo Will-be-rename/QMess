@@ -67,23 +67,24 @@ Rectangle
                         }
                     }
                 }
-
             }
-            ListView
-            {
-                id: messagesListView
-                currentIndex: 0
-                anchors.fill: parent
-                anchors.topMargin: 20
-                highlightFollowsCurrentItem: false
-                model: MessagesModel
-                {
-                    id: messagesList
-                }
-                delegate: messagesDelegate
-                spacing: 1
-                focus: false
-             }
+
         }
+    }
+
+    ListView
+    {
+        id: messagesListView
+        currentIndex: 0
+        anchors.fill: parent
+        anchors.topMargin: 20
+        highlightFollowsCurrentItem: false
+        model: MessagesModel
+        {
+            id: messagesList
+        }
+        delegate: messagesDelegate
+        spacing: 1
+        focus: false
     }
 }
