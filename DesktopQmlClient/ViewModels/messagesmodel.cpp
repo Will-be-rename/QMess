@@ -10,12 +10,10 @@ MessagesModel::MessagesModel()
 QHash<int, QByteArray> MessagesModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[MessagesModel::IdRole] = "messageId";
-    roles[MessagesModel::SenderRole] = "senderId";
-    roles[MessagesModel::ReceiverRole] = "receiverId";
-    roles[MessagesModel::TextRole] = "textBody";
-    roles[MessagesModel::DateTimeRole] = "dateTime";
-
+    roles[MessagesModel::TextBodyRole] = "textBody";
+    roles[MessagesModel::DateRole] = "date";
+    roles[MessagesModel::TimeRole] = "time";
+    roles[MessagesModel::IsReceivedRole] = "isReceived";
     return roles;
 }
 
@@ -32,29 +30,25 @@ QVariant MessagesModel::data(const QModelIndex& index, int role) const
         return {};
     }
 
-    const Message& message {(m_messages.at(static_cast<size_t>(index.row())))};
+    const MessageView& message {(m_messages.at(static_cast<size_t>(index.row())))};
 
     switch(role)
     {
-        case IdRole:
+        case TextBodyRole:
         {
-            return QVariant::fromValue(message.m_idMessage);
+            return QVariant::fromValue(message.getTextBody());
         }
-        case SenderRole:
+        case DateRole:
         {
-            return QVariant::fromValue(message.m_idSender);
+            return QVariant::fromValue(message.getDate());
         }
-        case ReceiverRole:
+        case TimeRole:
         {
-            return QVariant::fromValue(message.m_idReceiver);
+            return QVariant::fromValue(message.getTime());
         }
-        case TextRole:
+        case IsReceivedRole:
         {
-            return QVariant::fromValue(message.m_textBody);
-        }
-        case DateTimeRole:
-        {
-            return QVariant::fromValue(message.m_dateTime);
+            return QVariant::fromValue(message.isReceived());
         }
         default:
         {
@@ -69,9 +63,8 @@ void MessagesModel::registerMe(const std::string &moduleName)
     qmlRegisterType<MessagesModel>(moduleName.c_str(),1,0,"MessagesModel");
 }
 
-
 void MessagesModel::addMessages()
 {
-    m_messages.push_back({1,2,3,"Hello",""});
-    m_messages.push_back({1,2,3,"Lorem Ipsum - это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.",""});
+    m_messages.push_back({"Hello",QDateTime()});
+    m_messages.push_back({"Lorem Ipsum - это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.",QDateTime()});
 }

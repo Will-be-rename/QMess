@@ -3,7 +3,7 @@
 
 #include "ViewModels/usermodel.h"
 #include "ViewModels/messagesmodel.h"
-
+#include "Windows/chatwindow.h"
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -20,6 +20,6 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
-
+    ChatWindow w;
     return app.exec();
 }

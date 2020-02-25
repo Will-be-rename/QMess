@@ -14,9 +14,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        Processors/datastorage.cpp \
+        Processors/eventmessageprocessor.cpp \
         ViewModels/messagesmodel.cpp \
+        ViewModels/messageview.cpp \
         ViewModels/user.cpp \
         ViewModels/usermodel.cpp \
+        Windows/chatwindow.cpp \
         main.cpp \
 
 RESOURCES += qml.qrc
@@ -44,7 +48,11 @@ else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../b
 else:unix: PRE_TARGETDEPS += $$PWD/../build-libModel/liblibModel.a
 
 HEADERS += \
+    Processors/datastorage.h \
+    Processors/eventmessageprocessor.h \
     ViewModels/messagesmodel.h \
+    ViewModels/messageview.h \
     ViewModels/user.h \
     ViewModels/usermodel.h \
+    Windows/chatwindow.h \
 

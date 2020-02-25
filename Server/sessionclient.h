@@ -15,11 +15,12 @@ public:
     void SetSocket(qintptr handle);
     QTcpSocket* GetSocket();
     UserStatus getUserStatus();
+    QByteArray getUserStatusBytes();
     bool operator==(const SessionClient& other);
 signals:
     void notifyEveryoneSignal(QByteArray data);
-    void notifyReciever(QByteArray data, size_t recieverId);
-    void notifySender(QByteArray data, size_t senderId);
+    void notifyUser(QByteArray data, size_t userId);
+    void userReady(SessionClient*);
 public slots:
     void disconnected();
     void readyRead();
@@ -29,8 +30,7 @@ public slots:
     void setUserStatus(size_t      m_userId,
                       QString     m_userName,
                       bool        m_isOnline);
-    void notifyRecieverSlot(QByteArray data, size_t recieverId);
-    void notifySenderSlot(QByteArray data, size_t senderId);
+    void notifyUserSlot(QByteArray data, size_t userId);
 private:
     void setUpUser();
 
