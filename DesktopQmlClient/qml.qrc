@@ -5,5 +5,10 @@
         <file>QmlViews/MessagesView.qml</file>
         <file>QmlViews/UserListView.qml</file>
         <file>QmlViews/SearchFieldView.qml</file>
+        <file>QmlViews/UserListStatusBarView.qml</file>
+        <file>QmlViews/MessagesStatusBarView.qml</file>
+        <file>QmlViews/MessagesInputFieldView.qml</file>
+        <file>QmlViews/MessagesInputFieldButtonsView.qml</file>
+        <file>QmlViews/MessagesStatusBarButtonsView.qml</file>
     </qresource>
 </RCC>

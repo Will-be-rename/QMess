@@ -6,6 +6,8 @@ Rectangle
 {
     id: listRectangle
 
+    color: "#94918E"
+
     layer.enabled: true
     Component
     {

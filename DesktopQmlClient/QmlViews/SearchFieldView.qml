@@ -48,7 +48,6 @@ Rectangle {
             color: Qt.rgba(0, 0, 0, 0.50)
 
             text: qsTr("Search...")
-
         }
     }
 }
