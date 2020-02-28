@@ -23,7 +23,16 @@ void TcpDataProvider::sendLoginPackage(QTcpSocket &socket, const UserStatus &log
     QByteArray data;
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
-    ds << static_cast<int>(-1) << loginData;
+    ds << static_cast<int>(eCurrentUserRequest) << loginData;
+    socket.write(data);
+}
+
+void TcpDataProvider::sendMessageHistoryRequest(QTcpSocket& socket, const HistoryData& history)
+{
+    QByteArray data;
+    QDataStream ds(&data, QIODevice::ReadWrite);
+    ds.setVersion(QDataStream::Qt_5_11);
+    ds << static_cast<int>(eMessageHistoryRequest) << history;
     socket.write(data);
 }
 
@@ -57,15 +66,15 @@ void TcpDataProvider::getData(QTcpSocket &socket)
             }
             break;
 
-            /*case  eMessageHistoryResponse:
+            case  eMessageHistoryResponse:
             {
-                size_t userId;
-                ds >> userId;
-                QVector<QString> historyData;
+                HistoryData historyData;
                 ds >> historyData;
-                m_cachedHistory.fillChatHistoty(userId, historyData);
-                emit chatHistoryUpdated(userId);
-            }*/
+                //save for future
+                //m_cachedHistory.fillChatHistoty(userId, historyData);
+                emit chatHistoryUpdated(historyData);
+            }
+            break;
             case eCurrentUserResponse:
             {
                 UserStatus userStat;

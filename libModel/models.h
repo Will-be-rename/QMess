@@ -43,6 +43,8 @@ struct HistoryData
     size_t              m_currentUserId;
     size_t              m_friendUserId;
     QVector<Message>    m_historyData;
+    friend QDataStream &operator<<(QDataStream &ds, const HistoryData &a);
+    friend QDataStream &operator>>(QDataStream &ds, HistoryData &a);
 };
 enum PackageType
 {

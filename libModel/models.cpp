@@ -22,3 +22,15 @@ QDataStream &operator>>(QDataStream &in, UserStatus &a)
     in >> a.m_isOnline >> a.m_userId >> a.m_userName ;
     return in;
 }
+
+QDataStream &operator<<(QDataStream &out, const HistoryData &a)
+{
+    out << a.m_currentUserId << a.m_friendUserId << a.m_historyData;
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, HistoryData &a)
+{
+    in >> a.m_currentUserId >> a.m_friendUserId >> a.m_historyData;
+    return in;
+}
