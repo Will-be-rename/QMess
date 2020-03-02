@@ -3,6 +3,7 @@ import QtQuick.Controls 2.12
 
 Rectangle
 {
+    id : root
     color : parent.color
     Rectangle
     {
@@ -11,45 +12,45 @@ Rectangle
         width: parent.width * 0.4
         height : 35
 
-        color : parent.color
+        color : root.color
 
         anchors.top : parent.top
         anchors.topMargin: (parent.height - messageInputFieldButtons.height) / 2
 
-        Rectangle
+        InputFieldAttachmentButtonView
         {
-            id : attachmentBtn
-
-            width: 27
-            height : parent.height
+            id : attachmentButton
 
             anchors.left: parent.left
+
+            background: Rectangle { color: root.color }
         }
 
-        Rectangle
+        InputFieldSmilesButtonView
         {
-            id : smilesBtn
+            id : smilesButton
 
-            width: 30
-            height: parent.height
+            anchors
+            {
+                left: attachmentButton.right
+                leftMargin : 22
+            }
 
-            anchors.left : attachmentBtn.right
-            anchors.leftMargin: 22
+            background: Rectangle { color : root.color }
         }
 
-        Rectangle
+        InputFieldVoiceMessageButtonView
         {
-            id : voiceMsgBtn
+            id : voiceMsgButton
 
-            width: 21
-            height : parent.height
-
-            anchors.left : smilesBtn.right
+            anchors.left : smilesButton.right
             anchors.leftMargin: 22
+
+            background: Rectangle { color : root.color }
         }
     }
 
-    Button
+    InputFieldSendMessageButtonView
     {
         id: textInputButton
 
@@ -57,7 +58,6 @@ Rectangle
         width: parent.width * 0.6
 
         anchors.right: parent.right
-        text: "Send"
         highlighted: true
         onClicked:
         {

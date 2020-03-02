@@ -10,5 +10,16 @@
         <file>QmlViews/MessagesInputFieldView.qml</file>
         <file>QmlViews/MessagesInputFieldButtonsView.qml</file>
         <file>QmlViews/MessagesStatusBarButtonsView.qml</file>
+        <file>Resources/Images/attachment_btn_logo.png</file>
+        <file>Resources/Images/msg_search_btn_logo.png</file>
+        <file>Resources/Images/msg_settings_btn_logo.png</file>
+        <file>Resources/Images/smiles_btn_logo.png</file>
+        <file>Resources/Images/usr_list_settings_btn_logo.png</file>
+        <file>Resources/Images/voice_btn_logo.png</file>
+        <file>Resources/Images/send_button_logo.png</file>
+        <file>QmlViews/InputFieldAttachmentButtonView.qml</file>
+        <file>QmlViews/InputFieldSmilesButtonView.qml</file>
+        <file>QmlViews/InputFieldVoiceMessageButtonView.qml</file>
+        <file>QmlViews/InputFieldSendMessageButtonView.qml</file>
     </qresource>
 </RCC>
