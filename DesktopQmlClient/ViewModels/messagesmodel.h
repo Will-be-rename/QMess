@@ -8,13 +8,13 @@
 
 class MessagesModel : public QAbstractListModel
 {
+    Q_OBJECT
 public:
     MessagesModel();
     QHash<int, QByteArray> roleNames() const override;
     int rowCount(const QModelIndex& parent = {}) const override;
     QVariant data(const QModelIndex& index = {}, int role = Qt::DisplayRole) const override;
-    static void registerMe(const std::string& moduleName);
-    void addMessages(); //will be removed
+    void addMessage(const MessageView& newMessage);
 
 private:
     std::vector <MessageView> m_messages;

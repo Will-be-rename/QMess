@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import Users 1.0
 
 Rectangle
 {
@@ -126,10 +125,7 @@ Rectangle
         currentIndex: 0
         anchors.fill: parent
         highlightFollowsCurrentItem: false
-        model: UserModel
-        {
-            id: onlineUsersList
-        }
+        model: userModel
         delegate: userDelegate
         spacing: 1
         focus: true

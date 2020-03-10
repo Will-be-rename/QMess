@@ -1,6 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import Messages 1.0
+//import Messages 1.0
 
 Rectangle
 {
@@ -79,10 +79,7 @@ Rectangle
         anchors.fill: parent
         anchors.topMargin: 20
         highlightFollowsCurrentItem: false
-        model: MessagesModel
-        {
-            id: messagesList
-        }
+        model:  messagesModel
         delegate: messagesDelegate
         spacing: 1
         focus: false

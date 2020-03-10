@@ -21,6 +21,7 @@ SOURCES += \
         ViewModels/user.cpp \
         ViewModels/usermodel.cpp \
         Windows/chatwindow.cpp \
+    Windows/windowcontroller.cpp \
         main.cpp \
 
 RESOURCES += qml.qrc
@@ -55,4 +56,5 @@ HEADERS += \
     ViewModels/user.h \
     ViewModels/usermodel.h \
     Windows/chatwindow.h \
+    Windows/windowcontroller.h
 

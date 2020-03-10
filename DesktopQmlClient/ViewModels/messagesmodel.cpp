@@ -1,10 +1,9 @@
 #include "messagesmodel.h"
 
 #include <QQmlEngine>
-
+#include <QDebug>
 MessagesModel::MessagesModel()
 {
-    addMessages();
 }
 
 QHash<int, QByteArray> MessagesModel::roleNames() const
@@ -58,13 +57,12 @@ QVariant MessagesModel::data(const QModelIndex& index, int role) const
 
 }
 
-void MessagesModel::registerMe(const std::string &moduleName)
+void MessagesModel::addMessage(const MessageView& newMessage)
 {
-    qmlRegisterType<MessagesModel>(moduleName.c_str(),1,0,"MessagesModel");
+    beginInsertRows(QModelIndex(),rowCount(), rowCount());
+    m_messages.push_back(newMessage);
+    endInsertRows();
+    QModelIndex index = createIndex(rowCount(), 0, nullptr);
+    emit dataChanged(index, index);
 }
 
-void MessagesModel::addMessages()
-{
-    m_messages.push_back({"Hello",QDateTime()});
-    m_messages.push_back({"Lorem Ipsum - это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.",QDateTime()});
-}

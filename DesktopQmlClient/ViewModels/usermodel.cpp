@@ -57,11 +57,6 @@ QVariant UserModel::data(const QModelIndex& index, int role) const
 
 }
 
-void UserModel::registerMe(const std::string &moduleName)
-{
-    qmlRegisterType<UserModel>(moduleName.c_str(),1,0,"UserModel");
-}
-
 void UserModel::addUsers()
 {
     for(int i = 0 ; i < 100; i++)

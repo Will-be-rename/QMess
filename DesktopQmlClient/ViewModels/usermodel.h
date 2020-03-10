@@ -16,7 +16,6 @@ public:
     int rowCount(const QModelIndex& parent = {}) const override;
     QVariant data(const QModelIndex& index = {}, int role = Qt::DisplayRole) const override;
     Q_INVOKABLE QVariant getUserName(int index);
-    static void registerMe(const std::string& moduleName);
     void selectionChanged(int index);
 private:
     std::vector<User> m_users;
