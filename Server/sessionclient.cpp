@@ -13,7 +13,7 @@ SessionClient::SessionClient(QObject *parent) : QObject(parent)
 {
     qDebug() << "SessionClient ctor";
     QThreadPool::globalInstance()->setMaxThreadCount(8);
-    m_user.m_userId = static_cast<size_t>(-1);
+    m_user.m_userId = static_cast<int>(-1);
 }
 
 void SessionClient::SetSocket(qintptr handle)
@@ -32,7 +32,7 @@ QTcpSocket *SessionClient::GetSocket()
 
 void SessionClient::disconnected()
 {
-    if(m_user.m_userId != static_cast<size_t>(-1))
+    if(m_user.m_userId != static_cast<int>(-1))
     {
         DisconnectionHandler* handler = new DisconnectionHandler();
         handler->setAutoDelete(true);
@@ -50,8 +50,8 @@ void SessionClient::readyRead()
     director->setSocket(m_socket);
 
     connect(director,SIGNAL(currentUserRequest()),                  this, SLOT(setUpUser()),                            Qt::ConnectionType::QueuedConnection);
-    connect(director,SIGNAL(notifyReciever(QByteArray, size_t)),    this, SLOT(notifyUserSlot(QByteArray, size_t)),     Qt::ConnectionType::QueuedConnection);
-    connect(director,SIGNAL(notifySender(QByteArray, size_t)),      this, SLOT(notifyUserSlot(QByteArray, size_t)),     Qt::ConnectionType::QueuedConnection);
+    connect(director,SIGNAL(notifyReciever(QByteArray, int)),    this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
+    connect(director,SIGNAL(notifySender(QByteArray, int)),      this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
     QThreadPool::globalInstance()->start(director);
 }
 
@@ -76,7 +76,7 @@ void SessionClient::setUserStatus(UserStatus newUser)
     m_user = newUser;
 }
 
-void SessionClient::setUserStatus(size_t      m_userId,
+void SessionClient::setUserStatus(int      m_userId,
                                   QString     m_userName,
                                   bool        m_isOnline)
 {
@@ -92,7 +92,7 @@ void SessionClient::setUserStatus(size_t      m_userId,
 }
 
 
-void SessionClient::notifyUserSlot(QByteArray data, size_t userId)
+void SessionClient::notifyUserSlot(QByteArray data, int userId)
 {
     // provide signal to upper level
     emit notifyUser(data, userId);
@@ -128,7 +128,7 @@ void SessionClient::setUpUser()
     ConnectionHandler* handler = new ConnectionHandler();
     handler->setAutoDelete(true);
     connect(handler,SIGNAL(finish(QByteArray)),             this, SLOT(notifyEveryone(QByteArray)),         Qt::ConnectionType::QueuedConnection);
-    connect(handler,SIGNAL(userFound(size_t,QString,bool)), this, SLOT(setUserStatus(size_t,QString,bool)), Qt::ConnectionType::QueuedConnection);
+    connect(handler,SIGNAL(userFound(int,QString,bool)), this, SLOT(setUserStatus(int,QString,bool)), Qt::ConnectionType::QueuedConnection);
     QThreadPool::globalInstance()->start(handler);
 
 }

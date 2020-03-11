@@ -15,8 +15,8 @@ public:
     void handleMessage(Message data);
     void handleUserStatus(UserStatus data);
 signals:
-    void notifyReciever(QByteArray data, size_t recieverId);
-    void notifySender(QByteArray data, size_t senderId);
+    void notifyReciever(QByteArray data, int recieverId);
+    void notifySender(QByteArray data, int senderId);
 public slots:
 
 };

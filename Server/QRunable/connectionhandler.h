@@ -16,7 +16,7 @@ protected:
 signals:
     void finish(QByteArray data);
     void userFound
-    (size_t      m_userId,
+    (int      m_userId,
     QString     m_userName,
     bool        m_isOnline);
 public slots:

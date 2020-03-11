@@ -15,9 +15,9 @@ ConnectionHandler::ConnectionHandler(QObject *parent) : QObject(parent)
 void ConnectionHandler::run()
 {
     qDebug() << "Thread id" << QThread::currentThreadId();
-    size_t newUserId = rand() % 1000;
+    int newUserId = rand() % 1000;
     UserStatus newUser {
-        static_cast<size_t>(newUserId),
+        static_cast<int>(newUserId),
         "User "+ QString::number(newUserId),
         true};
     emit userFound(newUser.m_userId, newUser.m_userName, newUser.m_isOnline);

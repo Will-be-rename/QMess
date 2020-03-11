@@ -18,12 +18,12 @@ void TcpDataProvider::sendUserStatus(QTcpSocket &socket, const UserStatus &userS
     socket.write(data);
 }
 
-void TcpDataProvider::sendLoginPackage(QTcpSocket &socket, const UserStatus &loginData)
+void TcpDataProvider::sendLoginPackage(QTcpSocket &socket, const LoginPackage& loginpackge)
 {
     QByteArray data;
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
-    ds << static_cast<int>(eCurrentUserRequest) << loginData;
+    ds << static_cast<int>(eCurrentUserRequest) << loginpackge;
     socket.write(data);
 }
 

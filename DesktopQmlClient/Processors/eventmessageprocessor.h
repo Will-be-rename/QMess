@@ -22,6 +22,7 @@ public slots:
 
 private slots:
     void notify();
+    void clientConnected();
 private:
     QTcpSocket              m_socket;
     TcpDataProvider         m_dataProvider;

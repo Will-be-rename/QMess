@@ -14,12 +14,12 @@ public:
 protected:
     void run() override;
 signals:
-    void notifyReciever(QByteArray data, size_t recieverId);
-    void notifySender(QByteArray data, size_t senderId);
+    void notifyReciever(QByteArray data, int recieverId);
+    void notifySender(QByteArray data, int senderId);
     void currentUserRequest();
 private slots:
-    void notifyRecieverProvider(QByteArray data, size_t recieverId);
-    void notifySenderProvider(QByteArray data, size_t senderId);
+    void notifyRecieverProvider(QByteArray data, int recieverId);
+    void notifySenderProvider(QByteArray data, int senderId);
 private:
     QAbstractSocket* socket;
 };

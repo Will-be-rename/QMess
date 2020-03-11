@@ -1,7 +1,7 @@
 #include "runnabledirector.h"
 #include "models.h"
 #include "Handlers/eventhandler.h"
-
+#include "DataProviders/idataprovider.h"
 #include <QDataStream>
 
 RunnableDirector::RunnableDirector(QObject *parent) : QObject(parent), socket(nullptr)
@@ -54,6 +54,13 @@ void RunnableDirector::run()
                 }
                 break;
                 case  eMessageHistoryRequest:
+                {
+                    /*IDataProvider* provider = nullptr;
+                    UserStatus userStat;
+                    ds >> userStat;
+                    provider->getHistory();*/
+                }
+                break;
                 default:
                 break;
             }
@@ -61,12 +68,12 @@ void RunnableDirector::run()
     }
 }
 
-void RunnableDirector::notifyRecieverProvider(QByteArray data, size_t recieverId)
+void RunnableDirector::notifyRecieverProvider(QByteArray data, int recieverId)
 {
     emit notifyReciever(data, recieverId);
 }
 
-void RunnableDirector::notifySenderProvider(QByteArray data, size_t senderId)
+void RunnableDirector::notifySenderProvider(QByteArray data, int senderId)
 {
     emit notifySender(data, senderId);
 }

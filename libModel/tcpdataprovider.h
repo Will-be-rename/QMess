@@ -11,7 +11,7 @@ class TcpDataProvider : public QObject
 public:
     void sendMessage(QTcpSocket& socket, const Message& message);
     void sendUserStatus(QTcpSocket& socket, const UserStatus& message);
-    void sendLoginPackage(QTcpSocket& socket, const UserStatus& message);
+    void sendLoginPackage(QTcpSocket& socket, const LoginPackage& loginpackge);
     void sendMessageHistoryRequest(QTcpSocket& socket, const HistoryData& history);
     void getData(QTcpSocket& socket);
 signals :

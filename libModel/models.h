@@ -29,6 +29,8 @@ struct LoginPackage
 {
     QByteArray m_login; // hash of string
     QByteArray m_password; // hash of password
+    friend QDataStream &operator<<(QDataStream &ds, const LoginPackage &a);
+    friend QDataStream &operator>>(QDataStream &ds, LoginPackage &a);
 };
 
 struct UserData

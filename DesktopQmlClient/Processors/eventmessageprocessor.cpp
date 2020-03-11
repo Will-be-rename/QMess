@@ -19,6 +19,7 @@ void EventMessageProcessor::processEvents()
 {
     // this method will receive new TCP packages
     connect(&m_socket, SIGNAL(readyRead()), this, SLOT(notify()));
+    connect(&m_socket, SIGNAL(connected()), this, SLOT(clientConnected()));
     m_socket.connectToHost(QHostAddress(tcpdefines::ip), tcpdefines::port);
 }
 
@@ -43,5 +44,11 @@ void EventMessageProcessor::notify()
 TcpDataProvider& EventMessageProcessor::dataProvider()
 {
     return m_dataProvider;
+}
+
+void EventMessageProcessor::clientConnected()
+{
+    LoginPackage login{"",""};
+    m_dataProvider.sendLoginPackage(m_socket, login);
 }
 

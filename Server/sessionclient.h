@@ -19,7 +19,7 @@ public:
     bool operator==(const SessionClient& other);
 signals:
     void notifyEveryoneSignal(QByteArray data);
-    void notifyUser(QByteArray data, size_t userId);
+    void notifyUser(QByteArray data, int userId);
     void userReady(SessionClient*);
 public slots:
     void disconnected();
@@ -27,11 +27,11 @@ public slots:
     void notifyEveryone(QByteArray data);
     void sendData(QTcpSocket* socket, QByteArray data);
     void setUserStatus(UserStatus newUser);
-    void setUserStatus(size_t      m_userId,
+    void setUserStatus(int      m_userId,
                       QString     m_userName,
                       bool        m_isOnline);
-    void notifyUserSlot(QByteArray data, size_t userId);
-private:
+    void notifyUserSlot(QByteArray data, int userId);
+private slots:
     void setUpUser();
 
 private:

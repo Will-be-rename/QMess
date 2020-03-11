@@ -13,7 +13,7 @@ public:
 public slots:
     void incomingConnection(qintptr handle) override;
     void notifyEveryone(QByteArray bytes);
-    void notify(QByteArray bytes, size_t clientId);
+    void notify(QByteArray bytes, int clientId);
     void addConnection(SessionClient* connection);
 private:
     QVector<SessionClient*> m_clients;
