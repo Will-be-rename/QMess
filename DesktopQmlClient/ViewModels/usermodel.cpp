@@ -3,7 +3,7 @@
 
 UserModel::UserModel()
 {
-    addUsers();
+
 }
 
 QHash<int, QByteArray> UserModel::roleNames() const
@@ -74,5 +74,14 @@ QVariant UserModel::getUserName(int index)
 void UserModel::selectionChanged(int index)
 {
 
+}
+
+void UserModel::addUser(const User& newUser)
+{
+    beginInsertRows(QModelIndex(),rowCount(), rowCount());
+    m_users.push_back(newUser);
+    endInsertRows();
+    QModelIndex index = createIndex(rowCount(), 0, nullptr);
+    emit dataChanged(index, index);
 }
 

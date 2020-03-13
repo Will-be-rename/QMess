@@ -17,6 +17,7 @@ public:
     QVariant data(const QModelIndex& index = {}, int role = Qt::DisplayRole) const override;
     Q_INVOKABLE QVariant getUserName(int index);
     void selectionChanged(int index);
+    void addUser(const User& newUser);
 private:
     std::vector<User> m_users;
     enum UserRoles{

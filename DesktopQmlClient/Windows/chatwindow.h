@@ -7,16 +7,18 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-class ChatWindow
+class ChatWindow : public QObject
 {
+    Q_OBJECT
 public:
-    ChatWindow();
+    ChatWindow(QObject *parent = nullptr);
     void registerModels(QQmlApplicationEngine* engine);
 private:
     EventMessageProcessor m_EventProcessor;
     MessagesModel         m_messagesModel;
     UserModel             m_userModel;
-
+private slots:
+    void userStatusChangedSlot  (const UserStatus& status);
 };
 
 #endif // CHATWINDOW_H
