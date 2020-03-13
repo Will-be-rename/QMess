@@ -46,7 +46,8 @@ void ServerRunner::notifyEveryone(QByteArray bytes)
 {
     for(auto item : m_clients)
     {
-        if(item->getUserStatus().m_userId == static_cast<int>(-1))
+        qDebug() << "notifyEveryone " << item->getUserStatus().m_userId << "\n";
+        if(item->getUserStatus().m_userId != static_cast<int>(-1))
         {
             item->GetSocket()->write(bytes);
         }

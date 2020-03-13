@@ -127,8 +127,8 @@ void SessionClient::setUpUser()
 {
     ConnectionHandler* handler = new ConnectionHandler();
     handler->setAutoDelete(true);
-    connect(handler,SIGNAL(finish(QByteArray)),             this, SLOT(notifyEveryone(QByteArray)),         Qt::ConnectionType::QueuedConnection);
     connect(handler,SIGNAL(userFound(int,QString,bool)), this, SLOT(setUserStatus(int,QString,bool)), Qt::ConnectionType::QueuedConnection);
+    connect(handler,SIGNAL(finish(QByteArray)),             this, SLOT(notifyEveryone(QByteArray)),         Qt::ConnectionType::QueuedConnection);
     QThreadPool::globalInstance()->start(handler);
 
 }
