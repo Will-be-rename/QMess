@@ -6,6 +6,9 @@
 
 #include "tcpdataprovider.h"
 #include "datastorage.h"
+#include "ViewModels/user.h"
+#include "ViewModels/messageview.h"
+
 //#include "cachedmessagehistory.h"
 class EventMessageProcessor : public QObject
 {
@@ -15,14 +18,20 @@ public:
     void processEvents();// main method
     //CachedMessageHistory    m_cachedHistory;
     TcpDataProvider& dataProvider();
+    void sendMessage (const MessageView& newMessage);
 
 public slots:
-    void sendMessage        (const Message& newMessage);
     void sendUserStatus     (const UserStatus& newStatus);
 
 private slots:
     void notify();
     void clientConnected();
+    void newUserStatusDetectedSlot(const UserStatus& newStatus);
+    void newMessageDetectedSlot(const Message& newMessage);
+
+signals:
+    void newUserDetected(const User& newUser);
+    void newMessageReceived(const MessageView& newMessage);
 private:
     QTcpSocket              m_socket;
     TcpDataProvider         m_dataProvider;

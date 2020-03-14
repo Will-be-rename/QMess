@@ -12,7 +12,6 @@ QHash<int, QByteArray> MessagesModel::roleNames() const
     roles[MessagesModel::TextBodyRole] = "textBody";
     roles[MessagesModel::DateRole] = "date";
     roles[MessagesModel::TimeRole] = "time";
-    roles[MessagesModel::IsReceivedRole] = "isReceived";
     return roles;
 }
 
@@ -37,18 +36,14 @@ QVariant MessagesModel::data(const QModelIndex& index, int role) const
         {
             return QVariant::fromValue(message.getTextBody());
         }
-        case DateRole:
+      /*  case DateRole:
         {
             return QVariant::fromValue(message.getDate());
         }
         case TimeRole:
         {
             return QVariant::fromValue(message.getTime());
-        }
-        case IsReceivedRole:
-        {
-            return QVariant::fromValue(message.isReceived());
-        }
+        }*/
         default:
         {
         return {};
@@ -64,5 +59,14 @@ void MessagesModel::addMessage(const MessageView& newMessage)
     endInsertRows();
     QModelIndex index = createIndex(rowCount(), 0, nullptr);
     emit dataChanged(index, index);
+}
+
+void MessagesModel::sendMessage(const QString& messageText)
+{
+    if(false == messageText.isEmpty())
+    {
+        qDebug()<<"Send message " << messageText;
+        emit messageIsSent(messageText);
+    }
 }
 

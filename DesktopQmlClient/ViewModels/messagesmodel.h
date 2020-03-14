@@ -15,6 +15,7 @@ public:
     int rowCount(const QModelIndex& parent = {}) const override;
     QVariant data(const QModelIndex& index = {}, int role = Qt::DisplayRole) const override;
     void addMessage(const MessageView& newMessage);
+    Q_INVOKABLE void sendMessage(const QString& messageText);
 
 private:
     std::vector <MessageView> m_messages;
@@ -22,8 +23,9 @@ private:
          TextBodyRole = Qt::UserRole + 1,
          DateRole,
          TimeRole,
-         IsReceivedRole,
     };
+signals:
+    void messageIsSent(const QString& messageText);
 };
 
 #endif // MESSAGESMODEL_H

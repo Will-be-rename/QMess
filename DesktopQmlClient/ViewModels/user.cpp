@@ -9,7 +9,7 @@ User::User(const size_t& userId, const QString& name, const bool& online):
     m_incommingMessages = QRandomGenerator::global()->generate() % 3;
 }
 
-size_t User::getUserId() const
+int User::getUserId() const
 {
     return m_userId;
 }
@@ -25,4 +25,9 @@ int User::getIncommningMessages() const
 {
 
     return m_incommingMessages;
+}
+
+void User::setOnline(const bool& isOnline)
+{
+    m_online = isOnline;
 }

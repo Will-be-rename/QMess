@@ -40,6 +40,7 @@ Rectangle
                                 onClicked:
                                 {
                                     userListView.currentIndex = index
+                                    userModel.selectionChanged(index);
                                 }
                                 onEntered:
                                 {

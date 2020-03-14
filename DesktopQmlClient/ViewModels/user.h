@@ -8,12 +8,13 @@ class User
 public:
     User() = default;
     User(const size_t& userId, const QString& name, const bool& online);
-    size_t  getUserId() const;
+    int  getUserId() const;
     QString getUserName() const;
     bool    isOnline() const;
-    int getIncommningMessages() const;
+    int     getIncommningMessages() const;
+    void    setOnline(const bool& isOnline);
 private:
-    size_t  m_userId;
+    int  m_userId;
     QString m_name;
     bool    m_online;
     int m_incommingMessages;

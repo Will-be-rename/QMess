@@ -18,7 +18,11 @@ private:
     MessagesModel         m_messagesModel;
     UserModel             m_userModel;
 private slots:
-    void userStatusChangedSlot  (const UserStatus& status);
+    void userStatusChangedSlot  (const User& user);
+    void newMessageReceivedSlot (const MessageView& message);
+    void sendMessageSlot        (const QString& messageBody);
+signals:
+    void sendMessage(const Message& message);
 };
 
 #endif // CHATWINDOW_H

@@ -61,6 +61,7 @@ Rectangle
         highlighted: true
         onClicked:
         {
+            messagesModel.sendMessage(textInputField.text)
             textInputField.text = ""
             textInputBackground.visible = true
         }

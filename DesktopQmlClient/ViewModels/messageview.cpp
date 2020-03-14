@@ -1,9 +1,9 @@
 #include "messageview.h"
 
-MessageView::MessageView(QString textBody, QDateTime dateTime, bool isReceived):
+MessageView::MessageView(QString textBody, QString dateTime, int chatId):
                          m_textBody(textBody),
                          m_dateTime(dateTime),
-                         m_isReceived(isReceived)
+                         m_chatId(chatId)
 {
 
 }
@@ -13,17 +13,21 @@ QString MessageView::getTextBody() const
     return m_textBody;
 }
 
-QString MessageView::getDate() const
+QString MessageView::getDateTime() const
 {
-    return m_dateTime.date().toString(Qt::DateFormat::TextDate);
-}
-QString MessageView::getTime() const
-{
-    return m_dateTime.time().toString(Qt::DateFormat::TextDate);
+    return m_dateTime;
 }
 
-bool MessageView::isReceived() const
+int MessageView::getChatId() const
 {
-    return m_isReceived;
+    return m_chatId;
 }
 
+void MessageView::setTextBody(const QString& textBody)
+{
+    m_textBody = textBody;
+}
+void MessageView::setChatId(const int& chatId)
+{
+    m_chatId = chatId;
+}

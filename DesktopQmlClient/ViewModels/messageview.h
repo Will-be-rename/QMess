@@ -5,15 +5,17 @@
 class MessageView
 {
 public:
-    MessageView(QString textBody, QDateTime dateTime, bool isReceived = 0);
+    MessageView() = default;
+    MessageView(QString textBody, QString dateTime, int chatId);
     QString getTextBody() const;
-    QString getDate()     const;
-    QString getTime()     const;
-    bool    isReceived()  const;
+    QString getDateTime() const;
+    int     getChatId()   const;
+    void    setTextBody(const QString& textBody);
+    void    setChatId(const int& chatId);
 private:
     QString m_textBody;
-    QDateTime m_dateTime;
-    bool m_isReceived;
+    QString m_dateTime;
+    int     m_chatId;
 };
 
 #endif // MESSAGEVIEW_H
