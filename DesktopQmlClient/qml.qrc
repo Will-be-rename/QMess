@@ -21,5 +21,21 @@
         <file>QmlViews/InputFieldSmilesButtonView.qml</file>
         <file>QmlViews/InputFieldVoiceMessageButtonView.qml</file>
         <file>QmlViews/InputFieldSendMessageButtonView.qml</file>
+        <file>QmlViews/LoginView.qml</file>
+        <file>QmlViews/LoginStatusBarView.qml</file>
+        <file>Resources/Images/login_image.png</file>
+        <file>Resources/Images/login_close_btn_logo.png</file>
+        <file>Resources/Images/login_expand_btn_logo.png</file>
+        <file>Resources/Images/login_minimize_btn_logo.png</file>
+        <file>QmlViews/LoginMenuTabButton.qml</file>
+        <file>QmlViews/LoginInputField.qml</file>
+        <file>QmlViews/LoginSignInTabContentView.qml</file>
+        <file>Resources/Images/login_email_logo.png</file>
+        <file>Resources/Images/login_pwd_logo.png</file>
+        <file>Resources/Images/login_username_logo.png</file>
+        <file>QmlViews/LoginConfirmButton.qml</file>
+        <file>QmlViews/LoginSignUpTabContentView.qml</file>
+        <file>Resources/Images/login_phone_logo.png</file>
+        <file>Resources/Images/login_pwd_logo_2.png</file>
     </qresource>
 </RCC>

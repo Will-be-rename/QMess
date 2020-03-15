@@ -11,5 +11,6 @@ Window {
     height: 1080
     title: qsTr("MainWindow")
 
+//    LoginView { anchors.centerIn: parent }
     ChatWindowView { }
 }
