@@ -45,11 +45,10 @@ void SessionClient::disconnected()
 
 void SessionClient::readyRead()
 {
-    RunnableDirector* director = new RunnableDirector();
+    RunnableDirector* director = new RunnableDirector(m_socket);
     director->setAutoDelete(true);
-    director->setSocket(m_socket);
-
-    connect(director,SIGNAL(currentUserRequest()),                  this, SLOT(setUpUser()),                            Qt::ConnectionType::QueuedConnection);
+    qDebug() << "readyRead \n";
+    connect(director,SIGNAL(currentUserRequest()),               this, SLOT(setUpUser()),                         Qt::ConnectionType::QueuedConnection);
     connect(director,SIGNAL(notifyReciever(QByteArray, int)),    this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
     connect(director,SIGNAL(notifySender(QByteArray, int)),      this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
     QThreadPool::globalInstance()->start(director);

@@ -9,8 +9,7 @@ class RunnableDirector : public QObject, public QRunnable
 {
     Q_OBJECT
 public:
-    explicit RunnableDirector(QObject *parent = nullptr);
-    void setSocket(QAbstractSocket* socket);
+    explicit RunnableDirector(QAbstractSocket *_socket, QObject *parent = nullptr);
 protected:
     void run() override;
 signals:
