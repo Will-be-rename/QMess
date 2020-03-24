@@ -31,8 +31,6 @@ public slots:
                       QString     m_userName,
                       bool        m_isOnline);
     void notifyUserSlot(QByteArray data, int userId);
-private slots:
-    void setUpUser();
 
 private:
     QTcpSocket* m_socket;

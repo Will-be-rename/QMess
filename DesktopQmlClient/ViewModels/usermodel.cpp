@@ -29,7 +29,7 @@ QVariant UserModel::data(const QModelIndex& index, int role) const
         return {};
     }
 
-    const User& user {(m_users.at(static_cast<size_t>(index.row())))};
+    const User& user {(m_users.at(static_cast<int>(index.row())))};
 
     switch(role)
     {
@@ -78,7 +78,7 @@ void UserModel::selectionChanged(int index)
 
 void UserModel::addUser(const User& newUser)
 {
-    size_t index = 0;
+    int index = 0;
     QModelIndex modelIndex;
     for(; index < m_users.size(); ++index)
     {

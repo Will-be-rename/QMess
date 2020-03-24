@@ -7,7 +7,7 @@ class User
 {
 public:
     User() = default;
-    User(const size_t& userId, const QString& name, const bool& online);
+    User(const int& userId, const QString& name, const bool& online);
     int  getUserId() const;
     QString getUserName() const;
     bool    isOnline() const;

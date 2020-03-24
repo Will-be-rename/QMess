@@ -7,9 +7,9 @@
 
 struct Message
 {
-    size_t          m_idMessage;
-    size_t          m_idSender;
-    size_t          m_idReceiver;
+    int          m_idMessage;
+    int          m_idSender;
+    int          m_idReceiver;
     QString         m_textBody;
     QString         m_dateTime;
     friend QDataStream &operator<<(QDataStream &ds, const Message &a);
@@ -18,7 +18,7 @@ struct Message
 
 struct UserStatus // UserStatus ???
 {
-    size_t      m_userId;
+    int      m_userId;
     QString     m_userName;
     bool        m_isOnline;
     friend QDataStream &operator<<(QDataStream &ds, const UserStatus &a);
@@ -35,15 +35,15 @@ struct LoginPackage
 
 struct UserData
 {
-    size_t              m_userId;
+    int              m_userId;
     QString             m_userName;
     QVector<UserStatus> m_friends;
 };
 
 struct HistoryData
 {
-    size_t              m_currentUserId;
-    size_t              m_friendUserId;
+    int              m_currentUserId;
+    int              m_friendUserId;
     QVector<Message>    m_historyData;
     friend QDataStream &operator<<(QDataStream &ds, const HistoryData &a);
     friend QDataStream &operator>>(QDataStream &ds, HistoryData &a);

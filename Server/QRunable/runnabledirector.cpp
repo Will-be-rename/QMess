@@ -1,7 +1,7 @@
 #include "runnabledirector.h"
 #include "models.h"
 #include "Handlers/eventhandler.h"
-#include "DataProviders/idataprovider.h"
+#include "DataProviders/mockdataprovider.h"
 #include <QDataStream>
 
 RunnableDirector::RunnableDirector(QAbstractSocket *_socket, QObject *parent) : QObject(parent), socket(_socket)
@@ -22,19 +22,20 @@ void RunnableDirector::run()
     connect(&handler,SIGNAL(notifySender(QByteArray, int)),      this, SLOT(notifySenderProvider(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
     while(!ds.atEnd())
     {
+        qDebug() << "RunnableDirector::run() while\n";
         ds >> m_CurrentMessage;
-
+        MockDataProvider provider;
         switch(m_CurrentMessage)
         {
             case eMessage:
             {
+                qDebug() << "RunnableDirector::run() start eMessage\n";
                 Message incommingMess;
                 ds >> incommingMess;
-                static int messageId = 0;
-                messageId++;
-                incommingMess.m_idMessage = messageId;
+                provider.createMessageId(incommingMess);
+                provider.addToHistory(incommingMess);
                 handler.handleMessage(incommingMess);
-                qDebug() << "RunnableDirector::run() eMessage\n";
+                qDebug() << "RunnableDirector::run() end eMessage\n";
             }
             break;
 
@@ -50,8 +51,17 @@ void RunnableDirector::run()
 
             case eCurrentUserRequest:
             {
-                emit currentUserRequest();
+                UserStatus usr = provider.getUserData(LoginPackage{});
+                emit currentUserRequest(usr.m_userId,usr.m_userName,usr.m_isOnline);
+
+                QByteArray data;
+                QDataStream ds(&data, QIODevice::ReadWrite);
+                ds.setVersion(QDataStream::Qt_5_11);
+                ds << eUserStatus<<  usr;
+                emit notifyEveryone(data);
+
                 qDebug() << "RunnableDirector::run() eCurrentUserRequest\n";
+
             }
             break;
             case  eMessageHistoryRequest:

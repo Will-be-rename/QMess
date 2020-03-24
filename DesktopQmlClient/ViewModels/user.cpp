@@ -1,7 +1,7 @@
 #include "user.h"
 #include <QRandomGenerator>
 
-User::User(const size_t& userId, const QString& name, const bool& online):
+User::User(const int& userId, const QString& name, const bool& online):
            m_userId(userId),
            m_name(name),
            m_online(online)

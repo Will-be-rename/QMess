@@ -48,9 +48,10 @@ void SessionClient::readyRead()
     RunnableDirector* director = new RunnableDirector(m_socket);
     director->setAutoDelete(true);
     qDebug() << "readyRead \n";
-    connect(director,SIGNAL(currentUserRequest()),               this, SLOT(setUpUser()),                         Qt::ConnectionType::QueuedConnection);
-    connect(director,SIGNAL(notifyReciever(QByteArray, int)),    this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
-    connect(director,SIGNAL(notifySender(QByteArray, int)),      this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
+    connect(director,SIGNAL(currentUserRequest(int,QString,bool)),  this, SLOT(setUserStatus(int,QString,bool)),     Qt::ConnectionType::QueuedConnection);
+    connect(director,SIGNAL(notifyReciever(QByteArray, int)),       this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
+    connect(director,SIGNAL(notifySender(QByteArray, int)),         this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
+    connect(director,SIGNAL(notifyEveryone(QByteArray)),            this, SLOT(notifyEveryone(QByteArray)),     Qt::ConnectionType::QueuedConnection);
     QThreadPool::globalInstance()->start(director);
 }
 
@@ -108,7 +109,6 @@ QByteArray SessionClient::getUserStatusBytes()
 
 UserStatus SessionClient::getUserStatus()
 {
-
     return m_user;
 }
 
@@ -122,12 +122,3 @@ bool SessionClient::operator==(const SessionClient &other)
     return result;
 }
 
-void SessionClient::setUpUser()
-{
-    ConnectionHandler* handler = new ConnectionHandler();
-    handler->setAutoDelete(true);
-    connect(handler,SIGNAL(userFound(int,QString,bool)), this, SLOT(setUserStatus(int,QString,bool)), Qt::ConnectionType::QueuedConnection);
-    connect(handler,SIGNAL(finish(QByteArray)),             this, SLOT(notifyEveryone(QByteArray)),         Qt::ConnectionType::QueuedConnection);
-    QThreadPool::globalInstance()->start(handler);
-
-}

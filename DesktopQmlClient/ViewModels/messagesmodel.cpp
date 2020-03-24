@@ -28,7 +28,7 @@ QVariant MessagesModel::data(const QModelIndex& index, int role) const
         return {};
     }
 
-    const MessageView& message {(m_messages.at(static_cast<size_t>(index.row())))};
+    const MessageView& message {(m_messages.at(static_cast<int>(index.row())))};
 
     switch(role)
     {

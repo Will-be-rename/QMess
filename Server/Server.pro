@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         DataProviders/idataprovider.cpp \
+        DataProviders/mockdataprovider.cpp \
         Handlers/eventhandler.cpp \
         QRunable/connectionhandler.cpp \
         QRunable/disconnectionhandler.cpp \
@@ -32,6 +33,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
         DataProviders/idataprovider.h \
+        DataProviders/mockdataprovider.h \
         Handlers/eventhandler.h \
         QRunable/connectionhandler.h \
         QRunable/disconnectionhandler.h \
