@@ -66,10 +66,17 @@ void RunnableDirector::run()
             break;
             case  eMessageHistoryRequest:
             {
-                /*IDataProvider* provider = nullptr;
-                UserStatus userStat;
-                ds >> userStat;
-                provider->getHistory();*/
+                HistoryDataRequest historyDataRequest;
+                ds >> historyDataRequest;
+                HistoryData historyData = provider.getHistory(historyDataRequest.m_currentUserId,
+                                                       historyDataRequest.m_friendUserId,
+                                                       historyDataRequest.m_size);
+                QByteArray data;
+                QDataStream ds(&data, QIODevice::ReadWrite);
+                ds.setVersion(QDataStream::Qt_5_11);
+                ds << eMessageHistoryResponse <<  historyData;
+
+                emit notify(data, historyDataRequest.m_currentUserId);
             }
             break;
             default:

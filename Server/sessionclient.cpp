@@ -51,7 +51,8 @@ void SessionClient::readyRead()
     connect(director,SIGNAL(currentUserRequest(int,QString,bool)),  this, SLOT(setUserStatus(int,QString,bool)),     Qt::ConnectionType::QueuedConnection);
     connect(director,SIGNAL(notifyReciever(QByteArray, int)),       this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
     connect(director,SIGNAL(notifySender(QByteArray, int)),         this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
-    connect(director,SIGNAL(notifyEveryone(QByteArray)),            this, SLOT(notifyEveryone(QByteArray)),     Qt::ConnectionType::QueuedConnection);
+    connect(director,SIGNAL(notify(QByteArray, int)),               this, SLOT(notifyUserSlot(QByteArray, int)),     Qt::ConnectionType::QueuedConnection);
+    connect(director,SIGNAL(notifyEveryone(QByteArray)),            this, SLOT(notifyEveryone(QByteArray)),          Qt::ConnectionType::QueuedConnection);
     QThreadPool::globalInstance()->start(director);
 }
 

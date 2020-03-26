@@ -42,12 +42,22 @@ struct UserData
 
 struct HistoryData
 {
-    int              m_currentUserId;
-    int              m_friendUserId;
+    int                 m_currentUserId;
+    int                 m_friendUserId;
     QVector<Message>    m_historyData;
     friend QDataStream &operator<<(QDataStream &ds, const HistoryData &a);
     friend QDataStream &operator>>(QDataStream &ds, HistoryData &a);
 };
+
+struct HistoryDataRequest
+{
+    int                 m_currentUserId;
+    int                 m_friendUserId;
+    int                 m_size;
+    friend QDataStream &operator<<(QDataStream &ds, const HistoryDataRequest &a);
+    friend QDataStream &operator>>(QDataStream &ds, HistoryDataRequest &a);
+};
+
 enum PackageType
 {
     eUserStatus,

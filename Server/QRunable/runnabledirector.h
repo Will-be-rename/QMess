@@ -17,6 +17,7 @@ signals:
     void notifySender(QByteArray data, int senderId);
     void currentUserRequest(int,QString,bool);
     void notifyEveryone(QByteArray data);
+    void notify(QByteArray data, int userId);
 private slots:
     void notifyRecieverProvider(QByteArray data, int recieverId);
     void notifySenderProvider(QByteArray data, int senderId);

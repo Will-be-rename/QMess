@@ -45,3 +45,15 @@ QDataStream &operator>>(QDataStream &in, LoginPackage &a)
     in >> a.m_login >> a.m_password;
     return in;
 }
+
+QDataStream &operator<<(QDataStream &out, const HistoryDataRequest &a)
+{
+    out << a.m_currentUserId << a.m_friendUserId << a.m_size;
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, HistoryDataRequest &a)
+{
+    in >> a.m_currentUserId >> a.m_friendUserId >> a.m_size;
+    return in;
+}
