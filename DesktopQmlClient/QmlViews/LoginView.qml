@@ -8,6 +8,12 @@ Rectangle {
     color: "#B2AFAF"
     radius: 80
 
+    signal minimizeWindow()
+    signal closeWindow()
+    signal windowPositionChanged(point position)
+    signal signInRequest()
+    signal signUpRequest()
+
     LoginStatusBarView {
         id: statusBar
         width: 643
@@ -18,6 +24,19 @@ Rectangle {
         anchors.topMargin: 9
         anchors.left: parent.left
         anchors.leftMargin: 51
+
+        {
+            root.windowPositionChanged(position)
+        }
+
+        onMinimizeClicked: {
+            root.minimizeWindow()
+        }
+
+        onCloseClicked:
+        {
+            root.closeWindow()
+        }
     }
 
     LoginSignInTabContentView
@@ -34,6 +53,11 @@ Rectangle {
         radius: 40
 
         anchors.bottom: root.bottom
+
+        onSignInClicked:
+        {
+            root.signInRequest();
+        }
     }
 
     LoginSignUpTabContentView
@@ -50,5 +74,10 @@ Rectangle {
         radius: 40
 
         anchors.bottom: root.bottom
+
+        onSignUpClicked:
+        {
+            root.signUpRequest()
+        }
     }
 }

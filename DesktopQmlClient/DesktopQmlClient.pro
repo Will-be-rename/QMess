@@ -21,6 +21,7 @@ SOURCES += \
         ViewModels/user.cpp \
         ViewModels/usermodel.cpp \
         Windows/chatwindow.cpp \
+    Windows/loginwindow.cpp \
     Windows/windowcontroller.cpp \
         main.cpp \
 
@@ -56,5 +57,6 @@ HEADERS += \
     ViewModels/user.h \
     ViewModels/usermodel.h \
     Windows/chatwindow.h \
+    Windows/loginwindow.h \
     Windows/windowcontroller.h
 

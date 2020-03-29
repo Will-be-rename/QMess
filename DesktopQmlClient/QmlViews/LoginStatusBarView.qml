@@ -5,10 +5,33 @@ Rectangle {
     id: root
 
     property bool isSignInContentActive: signInTab.checked
+    signal minimizeClicked()
+    signal closeClicked()
+    signal positionChanged(point position)
 
     width: parent.width
     height: parent.height
     color: parent.color
+
+    MouseArea
+    {
+        /* TODO: there's a small insensitive area on the top above the buttons */
+        id: dragArea
+        property point mouseClickPosition: "1,1"
+
+        anchors.fill:parent
+        drag.target: root
+
+        onPressed: {
+            mouseClickPosition = Qt.point(mouse.x, mouse.y)
+        }
+
+        onPositionChanged:
+        {
+            root.positionChanged(Qt.point(mouse.x - mouseClickPosition.x, mouse.y - mouseClickPosition.y));
+        }
+    }
+
     Rectangle
     {
         id: imageArea
@@ -50,6 +73,10 @@ Rectangle {
                 anchors.centerIn: parent
                 source: "../Resources/Images/login_close_btn_logo.png"
             }
+            onClicked:
+            {
+                root.closeClicked();
+            }
         }
 
         Button
@@ -89,6 +116,10 @@ Rectangle {
                 id: minimizeButtonLogo
                 anchors.centerIn: parent
                 source: "../Resources/Images/login_minimize_btn_logo.png"
+            }
+            onClicked:
+            {
+                root.minimizeClicked()
             }
         }
 

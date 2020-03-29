@@ -7,6 +7,8 @@ Rectangle {
     width: parent.width
     height:parent.height
 
+    signal signUpClicked()
+
     LoginInputField
     {
         id: usernameField
@@ -77,7 +79,13 @@ Rectangle {
         anchors.topMargin: 30
         anchors.horizontalCenter: passwordField.horizontalCenter
 
-        text: qsTr("Sign In")
+        text: qsTr("Sign Up")
+
+        onClicked:
+        {
+            root.signUpClicked();
+        }
+
     }
 
 }

@@ -2,6 +2,7 @@
 #define WINDOWCONTROLLER_H
 
 #include "Windows/chatwindow.h"
+#include "Windows/loginwindow.h"
 
 class WindowController
 {
@@ -11,6 +12,7 @@ public:
 private:
     QQmlApplicationEngine m_engine;
     ChatWindow            m_chatWindow;
+    LoginWindow           m_loginWindow;
 };
 
 #endif // WINDOWCONTROLLER_H
