@@ -25,6 +25,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 51
 
+        onPositionChanged:
         {
             root.windowPositionChanged(position)
         }
