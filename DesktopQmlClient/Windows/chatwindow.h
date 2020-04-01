@@ -21,6 +21,7 @@ private slots:
     void userStatusChangedSlot  (const User& user);
     void newMessageReceivedSlot (const MessageView& message);
     void sendMessageSlot        (const QString& messageBody);
+    void userSelectedSlot();
 signals:
     void sendMessage(const Message& message);
 };

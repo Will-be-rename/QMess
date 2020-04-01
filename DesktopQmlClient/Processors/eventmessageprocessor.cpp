@@ -78,3 +78,10 @@ void EventMessageProcessor::newMessageDetectedSlot(const Message& newMessage)
     emit newMessageReceived(newMess);
 }
 
+void EventMessageProcessor::sendHistoryRequest(int friendId)
+{
+    int currentUserId = DataStorage::getInstance().getCurrentUser().m_userId;
+    HistoryDataRequest historyRequest{currentUserId, friendId, 0};
+    emit sendHistoryDataRequest(historyRequest);
+}
+

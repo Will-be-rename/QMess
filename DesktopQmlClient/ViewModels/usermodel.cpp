@@ -74,6 +74,7 @@ QVariant UserModel::getUserName(int index)
 void UserModel::selectionChanged(int index)
 {
     m_currentIndex = index;
+    emit userSelected();
 }
 
 void UserModel::addUser(const User& newUser)

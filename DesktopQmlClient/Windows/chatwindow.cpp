@@ -5,16 +5,14 @@ ChatWindow::ChatWindow(QObject *parent):
     m_EventProcessor()
 {
      m_EventProcessor.processEvents();
-     m_messagesModel.addMessage({"Hello","",0});
-     m_messagesModel.addMessage({"Hello","",0});
-     m_messagesModel.addMessage({"Lorem Ipsum - это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.","",0});
-     m_messagesModel.addMessage({"Lorem Ipsum - это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов.","",0});
      connect(&m_EventProcessor, SIGNAL(newUserDetected(User)),
                       this, SLOT(userStatusChangedSlot(User)));
      connect(&m_EventProcessor, SIGNAL(newMessageReceived(MessageView)),
                       this, SLOT(newMessageReceivedSlot(MessageView)));
      connect(&m_messagesModel, SIGNAL(messageIsSent(QString)),
                       this, SLOT(sendMessageSlot(QString)));
+     connect(&m_userModel, SIGNAL(userSelected()),
+                      this, SLOT(userSelectedSlot()));
 }
 
 void ChatWindow::registerModels(QQmlApplicationEngine* engine)
@@ -43,4 +41,11 @@ void ChatWindow::sendMessageSlot(const QString& messageBody)
         newMessage.setChatId(m_userModel.getCurrentUser().getUserId());
         m_EventProcessor.sendMessage(newMessage);
     }
+}
+
+void ChatWindow::userSelectedSlot()
+{
+    int friendId = m_userModel.getCurrentUser().getUserId();
+    m_EventProcessor.sendHistoryRequest(friendId);
+
 }

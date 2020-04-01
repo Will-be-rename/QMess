@@ -19,6 +19,7 @@ public:
     //CachedMessageHistory    m_cachedHistory;
     TcpDataProvider& dataProvider();
     void sendMessage (const MessageView& newMessage);
+    void sendHistoryRequest(int friendId);
 
 public slots:
     void sendUserStatus     (const UserStatus& newStatus);
@@ -32,6 +33,7 @@ private slots:
 signals:
     void newUserDetected(const User& newUser);
     void newMessageReceived(const MessageView& newMessage);
+    void sendHistoryDataRequest(const HistoryDataRequest& historyDataRequest);
 private:
     QTcpSocket              m_socket;
     TcpDataProvider         m_dataProvider;

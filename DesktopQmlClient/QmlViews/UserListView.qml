@@ -40,7 +40,6 @@ Rectangle
                                 onClicked:
                                 {
                                     userListView.currentIndex = index
-                                    userModel.selectionChanged(index);
                                 }
                                 onEntered:
                                 {
@@ -50,6 +49,7 @@ Rectangle
                                 {
                                     rowRectangle.opacity = 0.19
                                 }
+
 
                             }
                         }
@@ -143,7 +143,11 @@ Rectangle
                         y:  userListView.currentItem.y
                     }
             }
+        onCurrentItemChanged:
+        {
+            userModel.selectionChanged(userListView.currentIndex);
         }
+    }
 
 
 }

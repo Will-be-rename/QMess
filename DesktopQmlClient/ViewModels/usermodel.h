@@ -31,6 +31,8 @@ private:
          IncommingMessages,
     };
      void addUsers(); // will be removed
+signals:
+     void userSelected();
 };
 
 #endif // USERMODEL_H
