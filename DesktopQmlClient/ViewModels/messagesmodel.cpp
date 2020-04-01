@@ -65,7 +65,6 @@ void MessagesModel::sendMessage(const QString& messageText)
 {
     if(false == messageText.isEmpty())
     {
-        qDebug()<<"Send message " << messageText;
         emit messageIsSent(messageText);
     }
 }

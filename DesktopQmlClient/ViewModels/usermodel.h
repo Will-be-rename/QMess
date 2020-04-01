@@ -20,6 +20,7 @@ public:
     void addUser(const User& newUser);
     int getCurrentIndex() const;
     const User& getCurrentUser() const;
+    bool isEmpty() const;
 private:
     std::vector<User> m_users;
     int m_currentIndex;

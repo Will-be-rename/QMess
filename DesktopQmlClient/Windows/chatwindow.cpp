@@ -36,9 +36,11 @@ void ChatWindow::newMessageReceivedSlot(const MessageView& message)
 
 void ChatWindow::sendMessageSlot(const QString& messageBody)
 {
-    MessageView newMessage;
-    newMessage.setTextBody(messageBody);
-    newMessage.setChatId(m_userModel.getCurrentUser().getUserId());
-    qDebug() << "ChatWindow send message "<< messageBody<< " ChatId = " << newMessage.getChatId();
-    m_EventProcessor.sendMessage(newMessage);
+    if(false == m_userModel.isEmpty())
+    {
+        MessageView newMessage;
+        newMessage.setTextBody(messageBody);
+        newMessage.setChatId(m_userModel.getCurrentUser().getUserId());
+        m_EventProcessor.sendMessage(newMessage);
+    }
 }

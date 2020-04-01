@@ -109,3 +109,8 @@ const User& UserModel::getCurrentUser() const
 {
     return m_users[m_currentIndex];
 }
+
+bool UserModel::isEmpty() const
+{
+    return m_users.empty();
+}
