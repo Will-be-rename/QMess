@@ -17,6 +17,8 @@ EventMessageProcessor::EventMessageProcessor(QObject *parent) :
                      this, SLOT(newUserStatusDetectedSlot(UserStatus)));
     connect(&m_dataProvider, SIGNAL(newMessageDetected(Message)),
                      this, SLOT(newMessageDetectedSlot(Message)));
+    connect(&m_dataProvider, SIGNAL(chatHistoryUpdated(HistoryData)),
+                     this, SLOT(chatHistoryDetectedSlot(HistoryData)));
 }
 
 void EventMessageProcessor::processEvents()
@@ -76,6 +78,15 @@ void EventMessageProcessor::newMessageDetectedSlot(const Message& newMessage)
     MessageView newMess(newMessage.m_textBody, newMessage.m_dateTime, newMessage.m_idSender);
     qDebug() <<"EventMessageProcessor::newMessageDetectedSlot";
     emit newMessageReceived(newMess);
+}
+
+void EventMessageProcessor::chatHistoryDetectedSlot(const HistoryData& historyData)
+{
+    qDebug()<<"Received chat history:";
+    for(auto i: historyData.m_historyData)
+    {
+        qDebug() << i.m_textBody;
+    }
 }
 
 void EventMessageProcessor::sendHistoryRequest(int friendId)

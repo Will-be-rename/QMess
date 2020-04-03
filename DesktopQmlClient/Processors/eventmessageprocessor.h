@@ -29,6 +29,7 @@ private slots:
     void clientConnected();
     void newUserStatusDetectedSlot(const UserStatus& newStatus);
     void newMessageDetectedSlot(const Message& newMessage);
+    void chatHistoryDetectedSlot(const HistoryData& historyData);
 
 signals:
     void newUserDetected(const User& newUser);
