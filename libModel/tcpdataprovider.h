@@ -9,16 +9,19 @@ class TcpDataProvider : public QObject
 {
     Q_OBJECT
 public:
-    void sendMessage(QTcpSocket& socket, const Message& message);
-    void sendUserStatus(QTcpSocket& socket, const UserStatus& message);
-    void sendLoginPackage(QTcpSocket& socket, const LoginPackage& loginpackge);
-    void sendMessageHistoryRequest(QTcpSocket& socket, const HistoryData& history);
-    void getData(QTcpSocket& socket);
+    explicit TcpDataProvider(QTcpSocket* socket);
+    void sendData(const Message& message);
+    void sendData(const UserStatus& message);
+    void sendData(const LoginPackage& loginpackge);
+    void sendData(const HistoryDataRequest& history);
+    void getData();
 signals :
     void newMessageDetected(const Message& message);
     void newUserStatusDetected(const UserStatus& message);
     void currentUserDetected(const UserStatus& userStatus);
     void chatHistoryUpdated(const HistoryData& historyData);
+private:
+    QTcpSocket* m_socket;
 };
 
 #endif // TCPDATAPROVIDER_H

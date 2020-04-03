@@ -8,7 +8,7 @@
 EventMessageProcessor::EventMessageProcessor(QObject *parent) :
     QObject(parent),
     m_socket(this),
-    m_dataProvider()
+    m_dataProvider(&m_socket)
 {
     DataStorage* pointer = &DataStorage::getInstance();
     connect(&m_dataProvider, SIGNAL(currentUserDetected(UserStatus)),
@@ -36,19 +36,19 @@ void EventMessageProcessor::sendMessage(const MessageView& newMessage)
     messageToSend.m_dateTime = QDateTime::currentDateTime().toString();
     messageToSend.m_idSender = DataStorage::getInstance().getCurrentUser().m_userId;
     qDebug() <<"EventMessageProcessor::sendMessage";
-    m_dataProvider.sendMessage(m_socket, messageToSend);
+    m_dataProvider.sendData(messageToSend);
 }
 
 // this method will send new status to server
 void EventMessageProcessor::sendUserStatus(const UserStatus& newStatus)
 {
-    m_dataProvider.sendUserStatus(m_socket, newStatus);
+    m_dataProvider.sendData(newStatus);
 }
 
 // notify subs about new incomming TCP packages
 void EventMessageProcessor::notify()
 {
-    m_dataProvider.getData(m_socket);
+    m_dataProvider.getData();
 }
 
 TcpDataProvider& EventMessageProcessor::dataProvider()
@@ -59,7 +59,7 @@ TcpDataProvider& EventMessageProcessor::dataProvider()
 void EventMessageProcessor::clientConnected()
 {
     LoginPackage login{"",""};
-    m_dataProvider.sendLoginPackage(m_socket, login);
+    m_dataProvider.sendData(login);
 }
 
 void EventMessageProcessor::newUserStatusDetectedSlot(const UserStatus& newStatus)
@@ -82,6 +82,6 @@ void EventMessageProcessor::sendHistoryRequest(int friendId)
 {
     int currentUserId = DataStorage::getInstance().getCurrentUser().m_userId;
     HistoryDataRequest historyRequest{currentUserId, friendId, 0};
-    emit sendHistoryDataRequest(historyRequest);
+    m_dataProvider.sendData(historyRequest);
 }
 

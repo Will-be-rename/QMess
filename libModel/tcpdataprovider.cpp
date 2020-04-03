@@ -1,45 +1,49 @@
 #include "tcpdataprovider.h"
 
-void TcpDataProvider::sendMessage(QTcpSocket &socket, const Message &message)
+TcpDataProvider::TcpDataProvider(QTcpSocket* socket):
+                                 m_socket(socket)
+{}
+
+void TcpDataProvider::sendData(const Message &message)
 {
     QByteArray data;
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
     ds << static_cast<int>(eMessage) << message;
-    socket.write(data);
+    m_socket->write(data);
 }
 
-void TcpDataProvider::sendUserStatus(QTcpSocket &socket, const UserStatus &userStatus)
+void TcpDataProvider::sendData(const UserStatus &userStatus)
 {
     QByteArray data;
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
     ds << static_cast<int>(eUserStatus) << userStatus;
-    socket.write(data);
+    m_socket->write(data);
 }
 
-void TcpDataProvider::sendLoginPackage(QTcpSocket &socket, const LoginPackage& loginpackge)
+void TcpDataProvider::sendData(const LoginPackage& loginpackge)
 {
     QByteArray data;
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
     ds << static_cast<int>(eCurrentUserRequest) << loginpackge;
-    socket.write(data);
+    m_socket->write(data);
 }
 
-void TcpDataProvider::sendMessageHistoryRequest(QTcpSocket& socket, const HistoryData& history)
+void TcpDataProvider::sendData(const HistoryDataRequest& history)
 {
     QByteArray data;
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
     ds << static_cast<int>(eMessageHistoryRequest) << history;
-    socket.write(data);
+    m_socket->write(data);
 }
 
-void TcpDataProvider::getData(QTcpSocket &socket)
+void TcpDataProvider::getData()
 {
     int m_CurrentMessage = eMessage;
-    QByteArray data = socket.readAll();
+    QByteArray data = m_socket->readAll();
 
     qDebug() << "TcpDataProvider::getData size " << data.size();
     QDataStream ds(&data, QIODevice::ReadWrite);
