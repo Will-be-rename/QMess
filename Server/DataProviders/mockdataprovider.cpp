@@ -54,7 +54,10 @@ HistoryData MockDataProvider::getHistory(int firstUserId, int secondUserId, int 
    if(iter == histories.end())
    {
        qDebug() << "MockDataProvider::getHistory HISTORY NOT FOUND firstUserId " <<firstUserId << " secondUserId " << secondUserId << "\n";
-       return HistoryData(); //Temporary fix
+       HistoryData history;
+       history.m_friendUserId = secondUserId;
+       history.m_currentUserId = firstUserId;
+       return history; //Temporary fix
    }
    else
    {

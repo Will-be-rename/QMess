@@ -24,7 +24,7 @@ void RunnableDirector::run()
     {
         qDebug() << "RunnableDirector::run() while\n";
         ds >> m_CurrentMessage;
-        MockDataProvider provider;
+        static MockDataProvider provider;
         switch(m_CurrentMessage)
         {
             case eMessage:
@@ -66,6 +66,7 @@ void RunnableDirector::run()
             break;
             case  eMessageHistoryRequest:
             {
+                qDebug() << "RunnableDirector::run() start eMessageHistoryRequest 1 \n";
                 HistoryDataRequest historyDataRequest;
                 ds >> historyDataRequest;
                 HistoryData historyData = provider.getHistory(historyDataRequest.m_currentUserId,
@@ -76,7 +77,10 @@ void RunnableDirector::run()
                 ds.setVersion(QDataStream::Qt_5_11);
                 ds << eMessageHistoryResponse <<  historyData;
 
+                qDebug() << "RunnableDirector::run() start eMessageHistoryRequest 2 \n";
                 emit notify(data, historyDataRequest.m_currentUserId);
+
+                qDebug() << "RunnableDirector::run() start eMessageHistoryRequest 3 \n";
             }
             break;
             default:
