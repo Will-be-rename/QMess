@@ -61,6 +61,10 @@ HistoryData MockDataProvider::getHistory(int firstUserId, int secondUserId, int 
    }
    else
    {
+       for(auto it = iter->m_historyData.begin();it != iter->m_historyData.end(); it++)
+       {
+            qDebug() << "MockDataProvider::getHistory data"<< it->m_textBody <<" \n";
+       }
        return *iter;
    }
 }

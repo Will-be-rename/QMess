@@ -25,13 +25,24 @@ QDataStream &operator>>(QDataStream &in, UserStatus &a)
 
 QDataStream &operator<<(QDataStream &out, const HistoryData &a)
 {
-    out << a.m_currentUserId << a.m_friendUserId << a.m_historyData;
+    out << a.m_currentUserId << a.m_friendUserId << a.m_historyData.size();
+    for(int i = 0; i < a.m_historyData.size(); i++)
+    {
+       out << a.m_historyData[i];
+    }
     return out;
 }
 
 QDataStream &operator>>(QDataStream &in, HistoryData &a)
 {
-    in >> a.m_currentUserId >> a.m_friendUserId >> a.m_historyData;
+    int size = 0;
+    in >> a.m_currentUserId >> a.m_friendUserId >> size;
+    for(int i = 0; i < size; i++)
+    {
+        Message msg;
+        in >> msg;
+        a.m_historyData.push_back(msg);
+    }
     return in;
 }
 
