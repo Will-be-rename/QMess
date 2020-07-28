@@ -26,9 +26,9 @@ SOURCES += \
     ../../tcpdataprovider.cpp
 
 HEADERS += \
-        ../../models.h \
-        ../../tcpdataprovider.h \
-        ../../tcpdefines.h
+        models.h \
+        tcpdataprovider.h \
+        tcpdefines.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
