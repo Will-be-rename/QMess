@@ -1,7 +1,6 @@
 #include "runnabledirector.h"
-#include "models.h"
-#include "Handlers/eventhandler.h"
-#include "DataProviders/mockdataprovider.h"
+#include "../Handlers/eventhandler.h"
+#include "../DataProviders/mockdataprovider.h"
 #include <QDataStream>
 
 RunnableDirector::RunnableDirector(QAbstractSocket *_socket, QObject *parent) : QObject(parent), socket(_socket)

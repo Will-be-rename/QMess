@@ -1,5 +1,5 @@
 #include "connectionhandler.h"
-#include "models.h"
+#include "modelsAPI.h"
 
 #include <QDebug>
 #include <QThread>

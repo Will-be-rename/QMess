@@ -6,7 +6,6 @@
 #include <QVector>
 #include <QMutex>
 
-#include "models.h"
 #include "QRunable/connectionhandler.h"
 #include "QRunable/disconnectionhandler.h"
 SessionClient::SessionClient(QObject *parent) : QObject(parent)

@@ -16,15 +16,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        DataProviders/idataprovider.cpp \
-        DataProviders/mockdataprovider.cpp \
-        Handlers/eventhandler.cpp \
-        QRunable/connectionhandler.cpp \
-        QRunable/disconnectionhandler.cpp \
-        main.cpp \
-        QRunable/runnabledirector.cpp \
-        serverrunner.cpp \
-        sessionclient.cpp
+        src/DataProviders/idataprovider.cpp \
+        src/DataProviders/mockdataprovider.cpp \
+        src/Handlers/eventhandler.cpp \
+        src/QRunable/connectionhandler.cpp \
+        src/QRunable/disconnectionhandler.cpp \
+        src/main.cpp \
+        src/QRunable/runnabledirector.cpp \
+        src/serverrunner.cpp \
+        src/sessionclient.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -32,14 +32,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-        DataProviders/idataprovider.h \
-        DataProviders/mockdataprovider.h \
-        Handlers/eventhandler.h \
-        QRunable/connectionhandler.h \
-        QRunable/disconnectionhandler.h \
-        QRunable/runnabledirector.h \
-        serverrunner.h \
-        sessionclient.h
+        src/DataProviders/idataprovider.h \
+        src/DataProviders/mockdataprovider.h \
+        src/Handlers/eventhandler.h \
+        src/QRunable/connectionhandler.h \
+        src/QRunable/disconnectionhandler.h \
+        src/QRunable/runnabledirector.h \
+        src/serverrunner.h \
+        src/sessionclient.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-libModel/release/ -llibModel
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-libModel/debug/ -llibModel

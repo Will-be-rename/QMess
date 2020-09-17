@@ -1,5 +1,4 @@
 #include "disconnectionhandler.h"
-#include "models.h"
 
 DisconnectionHandler::DisconnectionHandler(QObject *parent) : QObject(parent)
 {

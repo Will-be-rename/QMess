@@ -4,3 +4,5 @@
 *build-libModel*
 *build-Server*
 *build-DesktopQmlClient*
+CMakeLists.txt.user
+build/*

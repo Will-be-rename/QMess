@@ -6,7 +6,7 @@
 #include <QVector>
 
 #include "QRunable/runnabledirector.h"
-#include "models.h"
+#include "modelsAPI.h"
 class SessionClient : public QObject
 {
     Q_OBJECT

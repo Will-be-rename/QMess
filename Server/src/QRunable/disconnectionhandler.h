@@ -4,7 +4,7 @@
 #include <QRunnable>
 #include <QObject>
 
-#include "models.h"
+#include "modelsAPI.h"
 class DisconnectionHandler : public QObject, public QRunnable
 {
     Q_OBJECT

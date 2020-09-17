@@ -22,14 +22,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ../../models.cpp \
-    ../../tcpdataprovider.cpp
+    src/models.cpp \
+    src/tcpdataprovider.cpp
 
 HEADERS += \
-        ../../models.h \
-        ../../tcpdataprovider.h \
-        ../../tcpdefines.h
+        src/models.h \
+        src/tcpdataprovider.h \
+        src/tcpdefines.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+DISTFILES += \
+    CMakeLists.txt

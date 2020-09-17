@@ -1,7 +1,5 @@
 #include "serverrunner.h"
-#include "models.h"
-#include "tcpdefines.h"
-
+#include "tcpdefinesAPI.h"
 
 #include <QDebug>
 #include <QTcpSocket>

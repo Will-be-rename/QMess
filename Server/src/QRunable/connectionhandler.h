@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QRunnable>
 
-#include "models.h"
+#include "modelsAPI.h"
 
 class ConnectionHandler : public QObject, public QRunnable
 {

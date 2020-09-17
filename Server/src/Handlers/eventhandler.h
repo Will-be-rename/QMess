@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QTcpSocket>
 
-#include "models.h"
+#include "modelsAPI.h"
 
 class EventHandler : public QObject
 {

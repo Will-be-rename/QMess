@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "models.h"
+#include "modelsAPI.h"
 class IDataProvider : public QObject
 {
     Q_OBJECT
