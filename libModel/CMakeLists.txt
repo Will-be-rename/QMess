@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.10)
 
 project(libModel VERSION 1.0)
 
@@ -17,7 +17,7 @@ set(headers
 
     src/models.h
     src/tcpdataprovider.h
-	src/tcpdefines.h)
+    src/tcpdefines.h)
 
 add_library(libModel STATIC
 
@@ -28,5 +28,6 @@ target_link_libraries(libModel
         Qt5::Core
         Qt5::Network)
 
+target_include_directories(libModel PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_include_directories(libModel INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 

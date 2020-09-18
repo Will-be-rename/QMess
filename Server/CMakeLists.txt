@@ -51,7 +51,7 @@ target_link_libraries(serverLib
     libModel
     Qt5::Core
     Qt5::Network)
-
+target_include_directories(serverLib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 add_executable(Server src/main.cpp)
 target_link_libraries(Server serverLib)
 					

@@ -1,5 +1,5 @@
 #include "eventmessageprocessor.h"
-#include "tcpdefines.h"
+#include "tcpdefinesAPI.h"
 
 #include <QHostAddress>
 #include <QDebug>

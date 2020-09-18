@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QTcpSocket>
 
-#include "tcpdataprovider.h"
+#include "tcpdataproviderAPI.h"
 #include "datastorage.h"
 #include "ViewModels/user.h"
 #include "ViewModels/messageview.h"
