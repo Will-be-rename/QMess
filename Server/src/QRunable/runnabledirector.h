@@ -1,5 +1,4 @@
-#ifndef RUNABLEDIRECTOR_H
-#define RUNABLEDIRECTOR_H
+#pragma once
 
 #include <QRunnable>
 #include <QObject>
@@ -24,5 +23,3 @@ private slots:
 private:
     QAbstractSocket* socket;
 };
-
-#endif // RUNABLEDIRECTOR_H

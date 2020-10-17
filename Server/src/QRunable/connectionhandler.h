@@ -1,5 +1,4 @@
-#ifndef CONNECTIONHANDLER_H
-#define CONNECTIONHANDLER_H
+#pragma once
 
 #include <QObject>
 #include <QRunnable>
@@ -21,5 +20,3 @@ signals:
     bool        m_isOnline);
 public slots:
 };
-
-#endif // CONNECTIONHANDLER_H

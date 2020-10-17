@@ -1,5 +1,4 @@
-#ifndef IDATAPROVIDER_H
-#define IDATAPROVIDER_H
+#pragma once
 
 #include <QObject>
 
@@ -17,5 +16,3 @@ signals:
 
 public slots:
 };
-
-#endif // IDATAPROVIDER_H

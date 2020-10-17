@@ -1,5 +1,4 @@
-#ifndef SESSIONCLIENT_H
-#define SESSIONCLIENT_H
+#pragma once
 
 #include <QObject>
 #include <QTcpSocket>
@@ -37,5 +36,3 @@ private:
     UserStatus m_user;
 
 };
-
-#endif // SESSIONCLIENT_H

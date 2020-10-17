@@ -3,6 +3,8 @@
 *build-DesktopClient*
 *build-libModel*
 *build-Server*
+*out*
 *build-DesktopQmlClient*
 CMakeLists.txt.user
 build/*
+*.vs*

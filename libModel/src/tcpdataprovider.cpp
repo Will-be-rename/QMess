@@ -1,8 +1,12 @@
 #include "tcpdataprovider.h"
 
-TcpDataProvider::TcpDataProvider(QTcpSocket* socket):
+#include <QCryptographicHash>
+
+TcpDataProvider::TcpDataProvider(QTcpSocket& socket, EncryptType type):
                                  m_socket(socket)
-{}
+{
+    //m_encryptor = createEncryptor(type);
+}
 
 void TcpDataProvider::sendData(const Message &message)
 {
@@ -10,7 +14,7 @@ void TcpDataProvider::sendData(const Message &message)
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
     ds << static_cast<int>(eMessage) << message;
-    m_socket->write(data);
+    m_socket.write(data);
 }
 
 void TcpDataProvider::sendData(const UserStatus &userStatus)
@@ -19,7 +23,7 @@ void TcpDataProvider::sendData(const UserStatus &userStatus)
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
     ds << static_cast<int>(eUserStatus) << userStatus;
-    m_socket->write(data);
+    m_socket.write(data);
 }
 
 void TcpDataProvider::sendData(const LoginPackage& loginpackge)
@@ -28,7 +32,7 @@ void TcpDataProvider::sendData(const LoginPackage& loginpackge)
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
     ds << static_cast<int>(eCurrentUserRequest) << loginpackge;
-    m_socket->write(data);
+    m_socket.write(data);
 }
 
 void TcpDataProvider::sendData(const HistoryDataRequest& history)
@@ -37,13 +41,13 @@ void TcpDataProvider::sendData(const HistoryDataRequest& history)
     QDataStream ds(&data, QIODevice::ReadWrite);
     ds.setVersion(QDataStream::Qt_5_11);
     ds << static_cast<int>(eMessageHistoryRequest) << history;
-    m_socket->write(data);
+    m_socket.write(data);
 }
 
-void TcpDataProvider::getData()
+void TcpDataProvider::geAllData()
 {
     int m_CurrentMessage = eMessage;
-    QByteArray data = m_socket->readAll();
+    QByteArray data = m_socket.readAll();
 
     qDebug() << "TcpDataProvider::getData size " << data.size();
     QDataStream ds(&data, QIODevice::ReadWrite);

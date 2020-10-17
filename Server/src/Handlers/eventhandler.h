@@ -1,5 +1,4 @@
-#ifndef EVENTHANDLER_H
-#define EVENTHANDLER_H
+#pragma once
 
 #include <QObject>
 #include <QTcpSocket>
@@ -20,5 +19,3 @@ signals:
 public slots:
 
 };
-
-#endif // EVENTHANDLER_H

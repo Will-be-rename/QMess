@@ -1,5 +1,4 @@
-#ifndef DISCONNECTIONHANDLER_H
-#define DISCONNECTIONHANDLER_H
+#pragma once
 
 #include <QRunnable>
 #include <QObject>
@@ -18,5 +17,3 @@ signals:
 private:
     UserStatus m_user;
 };
-
-#endif // DISCONNECTIONHANDLER_H

@@ -1,5 +1,4 @@
-#ifndef MODELS_H
-#define MODELS_H
+#pragma once
 
 #include <QString>
 #include <QDataStream>
@@ -67,5 +66,3 @@ enum PackageType
     eCurrentUserResponse,
     eCurrentUserRequest,
 };
-
-#endif //  MODELS_H

@@ -8,7 +8,7 @@
 EventMessageProcessor::EventMessageProcessor(QObject *parent) :
     QObject(parent),
     m_socket(this),
-    m_dataProvider(&m_socket)
+    m_dataProvider(m_socket, EncryptType::MD5)
 {
     DataStorage* pointer = &DataStorage::getInstance();
     connect(&m_dataProvider, SIGNAL(currentUserDetected(UserStatus)),
@@ -50,7 +50,7 @@ void EventMessageProcessor::sendUserStatus(const UserStatus& newStatus)
 // notify subs about new incomming TCP packages
 void EventMessageProcessor::notify()
 {
-    m_dataProvider.getData();
+    m_dataProvider.geAllData();
 }
 
 TcpDataProvider& EventMessageProcessor::dataProvider()

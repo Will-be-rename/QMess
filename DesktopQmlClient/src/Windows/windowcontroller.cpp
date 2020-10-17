@@ -9,6 +9,6 @@ WindowController::WindowController():m_engine(),
 
 void WindowController::start()
 {
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    const QUrl url(QStringLiteral(":/main.qml"));
     m_engine.load(url);
 }

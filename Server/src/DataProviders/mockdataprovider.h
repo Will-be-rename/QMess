@@ -1,5 +1,4 @@
-#ifndef MOCKDATAPROVIDER_H
-#define MOCKDATAPROVIDER_H
+#pragma once
 
 #include "idataprovider.h"
 
@@ -19,5 +18,3 @@ public slots:
 private:
     std::vector<HistoryData> histories;
 };
-
-#endif // MOCKDATAPROVIDER_H

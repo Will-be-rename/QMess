@@ -1,5 +1,4 @@
-#ifndef SERVERRUNNER_H
-#define SERVERRUNNER_H
+#pragma once
 
 #include <QTcpServer>
 #include "sessionclient.h"
@@ -18,5 +17,3 @@ public slots:
 private:
     QVector<SessionClient*> m_clients;
 };
-
-#endif // SERVERRUNNER_H
