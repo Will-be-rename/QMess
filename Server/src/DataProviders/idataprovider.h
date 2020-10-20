@@ -14,7 +14,7 @@ public:
     virtual void        createMessageId(Message& msg) = 0;
     virtual std::optional<HistoryData> getHistory(int firstUserId, int secondUserId, int size) = 0;
     virtual std::optional<UserStatus>  getUserData(const LoginPackage& data) = 0;
-    virtual std::set<UserStatus>& getOnlineUsers() = 0;
+    virtual const std::set<UserStatus>& getOnlineUsers() = 0;
     virtual void removeOnlineUser(const UserStatus& ) = 0;
     virtual void addOnlineUser(const UserStatus& ) = 0;
 signals:
