@@ -61,7 +61,7 @@ void UserModel::addUsers()
 {
     for(int i = 0 ; i < 100; i++)
     {
-        m_users.push_back({i,"User " + QString::number(i), i%3});
+        m_users.push_back({i,"User " + QString::number(i), static_cast<bool>(i%3)});
     }
 
 }

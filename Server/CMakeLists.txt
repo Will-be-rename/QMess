@@ -8,6 +8,16 @@ find_package(Qt5Network)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+set(commandsSrc
+    src/Commands/ICommand.h
+    src/Commands/IWorker.h
+    src/Commands/SyncWorker.cpp
+    src/Commands/SyncWorker.h
+    src/Commands/SetupUserCommand.cpp
+    src/Commands/SetupUserCommand.h
+    src/Commands/CommandAdapter.cpp
+    src/Commands/CommandAdapter.h)
+
 set(dataprovidersSrc
 
     src/DataProviders/idataprovider.cpp
@@ -42,6 +52,7 @@ set(serverSrc
 
 add_library(serverLib STATIC
 
+    ${commandsSrc}
     ${serverSrc}
     ${dataprovidersSrc}
     ${handlersSrc}

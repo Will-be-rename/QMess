@@ -39,7 +39,7 @@ void MockDataProvider::createMessageId(Message &msg)
     msg.m_idMessage = msgId;
 }
 
-HistoryData MockDataProvider::getHistory(int firstUserId, int secondUserId, int size)
+std::optional<HistoryData> MockDataProvider::getHistory(int firstUserId, int secondUserId, int size)
 {
    qDebug() << "MockDataProvider::getHistory \n";
    auto iter = histories.end();
@@ -69,7 +69,7 @@ HistoryData MockDataProvider::getHistory(int firstUserId, int secondUserId, int 
    }
 }
 
-UserStatus MockDataProvider::getUserData(const LoginPackage &loginData)
+std::optional<UserStatus> MockDataProvider::getUserData(const LoginPackage &loginData)
 {
    qDebug() << "MockDataProvider::getUserData \n";
    static int newUserId = 0;
@@ -79,4 +79,9 @@ UserStatus MockDataProvider::getUserData(const LoginPackage &loginData)
        "User "+ QString::number(newUserId),
        true};
    return newUser;
+}
+
+std::set<UserStatus> MockDataProvider::getOnlineUsers()
+{
+    return std::set<UserStatus>();
 }

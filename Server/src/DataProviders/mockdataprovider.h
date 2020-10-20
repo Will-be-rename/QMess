@@ -10,8 +10,9 @@ public:
     MockDataProvider();
     virtual void            addToHistory(const Message& msg);
     virtual void            createMessageId(Message& msg);
-    virtual HistoryData     getHistory(int firstUserId, int secondUserId, int size);
-    virtual UserStatus      getUserData(const LoginPackage& data);
+    virtual std::optional<HistoryData>     getHistory(int firstUserId, int secondUserId, int size);
+    virtual std::optional<UserStatus>      getUserData(const LoginPackage& data);
+    virtual std::set<UserStatus> getOnlineUsers();
 signals:
 
 public slots:

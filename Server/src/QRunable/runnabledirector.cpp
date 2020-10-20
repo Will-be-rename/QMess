@@ -50,7 +50,7 @@ void RunnableDirector::run()
 
             case eCurrentUserRequest:
             {
-                UserStatus usr = provider.getUserData(LoginPackage{});
+                UserStatus usr = provider.getUserData(LoginPackage{}).value();
                 emit currentUserRequest(usr.m_userId,usr.m_userName,usr.m_isOnline);
 
                 QByteArray data;
@@ -70,7 +70,7 @@ void RunnableDirector::run()
                 ds >> historyDataRequest;
                 HistoryData historyData = provider.getHistory(historyDataRequest.m_currentUserId,
                                                        historyDataRequest.m_friendUserId,
-                                                       historyDataRequest.m_size);
+                                                       historyDataRequest.m_size).value();
                 QByteArray data;
                 QDataStream ds(&data, QIODevice::ReadWrite);
                 ds.setVersion(QDataStream::Qt_5_11);

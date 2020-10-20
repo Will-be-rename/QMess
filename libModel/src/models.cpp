@@ -1,4 +1,5 @@
 #include "models.h"
+
 QDataStream &operator<<(QDataStream &out, const Message &a)
 {
     out << a.m_idMessage << a.m_idSender << a.m_idReceiver << a.m_textBody << a.m_dateTime;

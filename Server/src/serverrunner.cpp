@@ -6,7 +6,9 @@
 #include <QByteArray>
 
 
-ServerRunner::ServerRunner()
+ServerRunner::ServerRunner(commands::IWorker& worker, IDataProvider& dataprovider):
+    m_worker(worker),
+    m_dataprovider(dataprovider)
 {
     qDebug() << "ServerRunner ctor \n";
 }
