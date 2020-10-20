@@ -1,8 +1,6 @@
 #pragma once
 
 #include <QTcpServer>
-#include "Commands/IWorker.h"
-#include "DataProviders/idataprovider.h"
 #include "sessionclient.h"
 
 class ServerRunner : public QTcpServer

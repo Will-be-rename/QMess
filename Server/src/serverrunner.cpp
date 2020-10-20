@@ -28,7 +28,7 @@ void ServerRunner::StartServer()
 void ServerRunner::incomingConnection(qintptr handle)
 {
     qDebug() << "incomingConnection";
-    SessionClient* client = new SessionClient(this);
+    SessionClient* client = new SessionClient(m_worker, m_dataprovider ,this);
 
     connect(client,SIGNAL(notifyEveryoneSignal(QByteArray)),
                 this, SLOT(notifyEveryone(QByteArray)));

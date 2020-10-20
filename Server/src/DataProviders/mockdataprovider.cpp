@@ -81,7 +81,7 @@ std::optional<UserStatus> MockDataProvider::getUserData(const LoginPackage &logi
    return newUser;
 }
 
-std::set<UserStatus> MockDataProvider::getOnlineUsers()
+const std::set<UserStatus>& MockDataProvider::getOnlineUsers()
 {
     return std::set<UserStatus>();
 }

@@ -8,7 +8,10 @@
 
 #include "QRunable/connectionhandler.h"
 #include "QRunable/disconnectionhandler.h"
-SessionClient::SessionClient(QObject *parent) : QObject(parent)
+SessionClient::SessionClient(commands::IWorker& worker, IDataProvider& dataprovider, QObject *parent)
+    : m_worker(worker),
+      m_dataprovider(dataprovider),
+      QObject(parent)
 {
     qDebug() << "SessionClient ctor";
     QThreadPool::globalInstance()->setMaxThreadCount(8);
